@@ -1,0 +1,103 @@
+\section{Research Objectives}
+
+\subsection{General objectives}
+
+The goal of this thesis is to enhance the analytical processes in Jian's work and 
+to further design and implement the core idea of using zoobenthic measurements to 
+infer the sediment contamination level of the Huron-Erie corridor.
+Specifically, the general objectives can be summarized as follows:
+\begin{enumerate}
+    \item Assess anthropogenic adverse effects on aquatic sites using stressor measurements.
+    \item Design and implement a zoobenthic community indicator to assess taxonomic composition structure.
+    \item Explore the potential for using the zoobenthic community indicator 
+    to infer sediment contamination level with control of environmental variables.
+    Design an inference model if appropriate.
+\end{enumerate}
+
+\subsection{Overview of the sub-objectives with the proposed framework}
+
+The above general goals will be supported and further detailed by the following specific objectives and corresponding analytical steps:
+\begin{enumerate}
+    \item \textbf{Sediment contamination assessment}
+    
+    Apply an assessment method to chemical element concentrations to evaluate pollutant levels, 
+    interpret pollutant patterns among sites, and identify key contaminants.
+
+    \item \textbf{Zoobenthic community structure discriminant model of environmental variables}
+
+    Filter reference sites based on assessed stress levels, assuming that human impact is minimal or absent, 
+    and that the community structure is primarily shaped by natural environmental variability.
+
+    Explore the relationship between minimally impacted community structure and environmental variables, 
+    and build a predictive model to infer the expected community structure under natural conditions (without human disturbance).
+    
+    Given the limited environmental variables and other potentially unmeasured or unmeasurable environmental factors, 
+    it is nearly impossible to train a fully quantitative inference model from environmental variables to taxa.
+
+    Therefore, constrained predicted values should be constructed and applied to avoid overfitting 
+    and to extract limited yet informative inferences about community structure using available environmental variables.
+
+    \textit{It requires the following additional steps:}:
+    \begin{itemize}
+        \item \textbf{Partition the reference sites into different groups} based on their taxa composition.
+        \item Build a discriminant model \textbf{between the taxa composition groups and environmental variables}.
+    \end{itemize}
+
+    The resulting predicted group labels provide more reliable information, as the limited 
+    environmental variables are only used to classify sites into taxa composition groups that were 
+    predefined from the reference sites.
+
+    \item \textbf{Partition all sites into comparable taxa composition groups}
+    
+    Apply the discriminant model to all sites, including degraded and intermediate sites, 
+    to assign each site to one of the taxa composition groups. 
+    The group positions are fixed based on reference site partitioning.
+
+    \item \textbf{Measure the distance between each site and the reference and degraded endpoints within each taxa composition group}
+
+    Scale the taxa composition structure and define a metric to measure the 
+    distance between each site and the reference and degraded endpoints within each group.
+    Given similar environmental conditions across the group, differences in taxa composition are assumed to be caused by human disturbance.
+
+    \item \textbf{Quantitative regression to assess the relationship between the stressor level and the taxa composition structure}
+    
+    Variations in taxa composition from the reference endpoint should be explained by the 
+    relative stress level of each site. A quantitative regression model can assess this relationship.
+    Considering the large number of potential ecological influences, non-linear quantile regression is employed 
+    to explore patterns beyond traditional mean regression.
+
+\end{enumerate}
+
+\subsection{Potential Impacts and Further Questions}
+
+Through achieving these objectives, there is a potential to significantly enhance the understanding of
+the sediment contamination within the \textcolor{blue}{Huron-Erie corridor} and to develop 
+a more robust zoobenthic community indicator that can be used to infer sediment contamination levels.
+
+\textbf{Several benthic integrity assessment relevant questions arise and might be answered from the implementation of these objectives},
+tentatively listed as follows:
+\begin{itemize}
+    \item Is there a generally applicable sediment contamination assessment method that can be applied to different types of 
+    environmental conditions, or does the method need to be tailored to specific conditions?
+
+    \item To what extent the clustering-discriminant model
+    \footnote{The clustering and discriminant methods are bundled together to form a single step in the framework. 
+    Its purpose is to extract confined information(groups) from the selected sites, 
+    fit a discriminant model of environmental variables
+    for the groups, and then apply the model to all sites to assign them to the groups.}
+    can effectively capture the natural variability in taxa composition,
+    and how the clustering parts, which are applied on different \textbf{partitions} in contamination assessment results,
+    can shape the discriminant model?
+
+    \item How to construct the measurement of zoobenthic community structure according to the contamination assessment results 
+    to support the inference model? To what extent should the two measurements be correlated but meanwhile keeping partial independence 
+    to ensure their respective interpretability?
+
+    \item How to link the measurement of zoobenthic community structure to probability measurement of sediment contamination level
+     - degraded, especially in areas with intermediate anthropogenic influence.
+\end{itemize}
+
+
+
+
+

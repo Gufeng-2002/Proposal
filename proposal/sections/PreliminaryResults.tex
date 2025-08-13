@@ -1,0 +1,39 @@
+\section{Preliminary exploration}
+
+In this section, I implemented a simplified framework of 
+Jian's analysis of the ZCI-stress score relationship using the quantile regression.
+\begin{enumerate}
+
+\item \textbf{Collect comparable data.}
+
+I currently have three datasets: zoobenthic community data (311×16), chemical data (104×30), and environmental data (289×7). These datasets were merged by station ID, resulting in a combined dataset with 104 rows and 53 columns, containing all three types of data. Column indices were structured by data type to improve readability and consistency for future processing.
+
+\item \textbf{Pre-process taxa data.}
+
+The zoobenthic dataset has issues such as small sample size and potential outliers. I used the IQR method to detect outliers and then applied octave transformation, as suggested in Jian’s analysis, to reduce their impact. The transformed data showed fewer outliers and a more even distribution.
+
+\item \textbf{Assess sediment contamination.}
+
+Instead of standardization, I applied log-transformation to the chemical data to reduce dominance by high-value variables. Then I conducted PCA and selected principal components based on variance explained, pollutant specificity, and balanced loadings. These selected components were normalized and summed (with attention to loading directions) to produce a composite “SumReal” score reflecting sediment contamination. This score was added to the dataset as an indicator of stress level.
+
+\item \textbf{Identify reference and degraded sites.}
+
+Sites were classified by their stress scores. The bottom 20\% were considered minimally disturbed (reference sites), and the top 20% were labeled as degraded. Reference sites are assumed to reflect taxa composition shaped only by environmental factors and will be used to build a predictive model for expected community composition under natural conditions.
+
+\item \textbf{Cluster reference sites by community composition.}
+
+Since taxa composition varies even among reference sites, clustering was applied to identify dominant community patterns under undisturbed conditions. These clusters represent “normal” taxa structures, each likely shaped by distinct environmental conditions.
+
+\item \textbf{Build a discriminant model for habitat classification.}
+
+A discriminant model was trained to predict cluster membership using environmental variables from reference sites. This model was applied to all sites, assigning each to one of the community clusters. This setup allows comparisons between reference and degraded sites within the same habitat type to define “best” and “worst” endpoints.
+
+\item \textbf{Construct endpoints and compute ZCI via ordination.}
+
+Within each cluster, endpoints were constructed using mean taxa abundances from the most reference-like and most degraded sites. These endpoints were used in Bray-Curtis ordination to assign scores to each site, scaled between 0 (worst) and 1 (best) to compute the Zoobenthic Condition Index (ZCI). I do not yet fully understand the ordination method used, and I plan to explore whether a vector-based ZCI might provide a more accurate assessment.
+
+\item \textbf{Evaluate the ZCI vs SumRel relationship by quantile regression.}
+
+I plotted ZCI against SumRel and applied quantile regression to examine their relationship.
+
+\end{enumerate}

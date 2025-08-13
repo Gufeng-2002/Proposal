@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2024)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Feng's_Proposal.aux
+The style file: plain.bst
+Database file #1: sections/Reference.bib
+Warning--entry type for "EPA_Greatlakes2024" isn't style-file defined
+--line 51 of file sections/Reference.bib
+You've used 15 entries,
+            2118 wiz_defined-function locations,
+            609 strings with 7531 characters,
+and the built_in function-call counts, 5198 in all, are:
+= -- 501
+> -- 300
+< -- 0
++ -- 122
+- -- 104
+* -- 411
+:= -- 921
+add.period$ -- 47
+call.type$ -- 15
+change.case$ -- 97
+chr.to.int$ -- 0
+cite$ -- 15
+duplicate$ -- 155
+empty$ -- 358
+format.name$ -- 104
+if$ -- 1025
+int.to.chr$ -- 0
+int.to.str$ -- 15
+missing$ -- 12
+newline$ -- 80
+num.names$ -- 30
+pop$ -- 72
+preamble$ -- 1
+purify$ -- 81
+quote$ -- 0
+skip$ -- 106
+stack$ -- 0
+substring$ -- 316
+swap$ -- 13
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 60
+warning$ -- 0
+while$ -- 49
+width$ -- 17
+write$ -- 171
+(There was 1 warning)

@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage{geometry}
+\geometry{a4paper, 
+margin=1in}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx} % Required for including images
+\usepackage{subcaption}  % Required for subfigures
+% \geometry{margin=1in}
+\usepackage{tcolorbox}
+\usepackage{booktabs}    % \toprule, \midrule, \bottomrule
+\usepackage{caption}     % if you need \caption* or extra caption control
+\usepackage{longtable}   % if your table might span multiple pages
+\usepackage{array}       % for more flexible column specs (e.g. >{\ttfamily}l)
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+
+
+\title{Template for Thesis Proposal}
+\author{Feng Gu}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\clearpage
+% \begin{center}
+%     {\Large Abstract}
+
+%     Here to put the abstract of the document.
+% \end{center}
+
+% \clearpage
+\input{sections/CusCommands.tex} % Custom commands for convenience
+\input{sections/Introduction.tex}
+\clearpage
+\input{sections/ResearchObjectives.tex}
+\clearpage
+\input{sections/DataDescription.tex}
+\clearpage
+\input{sections/LiteratureReview.tex}
+\clearpage
+\input{sections/Methodology.tex}
+\clearpage
+\input{sections/PreliminaryResults.tex}
+% \input{sections/subsectionofPreliminaryResults.tex}
+% % \clearpage
+% \input{sections/SupervisoryDissolution.tex}
+% % \clearpage
+% \input{sections/Timeline.tex}
+
+\bibliographystyle{plain}  % or use unsrt if you want citations in order of appearance
+\bibliography{sections/Reference}   % your .bib file, without .bib extension
+
+\clearpage
+\input{sections/Appendix.tex}
+
+\end{document}
+
