@@ -7,7 +7,6 @@ This repository contains the thesis proposal for developing zoobenthic community
 **Author:** Feng Gu  
 **Institution:** Thompson Rivers University  
 **Program:** Master of Science in Data Science
-**Email:** gfeng643@gmail.com
 
 ## 🏗️ Repository Structure
 
