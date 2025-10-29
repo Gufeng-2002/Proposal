@@ -1,101 +1,147 @@
 \section{Research Objectives}
 
-\subsection{General objectives}
+The goal of this study is to build a zoobenthic community indicator(ZCI) of sediment contamination 
+in a large aquatic ecosystem(e.g., SCDRS or Detroit River) by means of multivariate statistical analysis.
+This work can be divided into five specific objectives with respects to aquatic ecology principles and
+statistical methodologies:
 
-The goal of this thesis is to enhance the analytical processes in Jian's work and 
-to further design and implement the core idea of using zoobenthic measurements to 
-infer the sediment contamination level of the Huron-Erie corridor.
-Specifically, the general objectives can be summarized as follows:
 \begin{enumerate}
-    \item Assess anthropogenic adverse effects on aquatic sites using stressor measurements.
-    \item Design and implement a zoobenthic community indicator to assess taxonomic composition structure.
-    \item Explore the potential for using the zoobenthic community indicator 
-    to infer sediment contamination level with control of environmental variables.
-    Design an inference model if appropriate.
+    \item Build quantitative composite measures of sediment contamination levels and zoobenthic community composition.
+        \item Control for natural variability in community composition and isolate anthropogenic effects on community composition.
+        \item Incorporate spatial features to account for potential spatial heterogeneity in community composition.
+        \item Model the relationship between the sediment contamination levels and zoobenthic community composition
+        with piecewise quantile regression and extend it to a bioindicator (ZCI) of sediment contamination level.
+        \item Evaluate the indicator power and robustness of the developed ZCI with respect
+        to sample size and other relevant global factors that can influence the estimates.
 \end{enumerate}
 
-\subsection{Overview of the sub-objectives with the proposed framework}
+These listed objectives are made in a tentatively sequential order. Some objectives have been well-supported by
+existing researches while others are more exploratory. Objectives \textcolor{blue}{1, 2} and \textcolor{blue}{4},
+form a good benchmark of building the zoobenthic community indicator and are supported by a well-established
+\textbf{Multivariate Community Indicator Framework}
+\footnote{Its details are provided in following content and in the Methodology section}
+\cite{Brazner2007, Kovalenko2014, Host2019, Ciborowski2005ZoobenthicIndicators,Zhang2008}
+amenable to application of a piecewise quantile regression model.
+Objectives \textcolor{blue}{3} and \textcolor{blue}{5} require exploratory investigations, 
+and will serve to enhance and increase understanding of the indicator's power and sensitivities.
 
-The above general goals will be supported and further detailed by the following specific objectives and corresponding analytical steps:
+The following subsections disccussed the proposed general approach, highlighting the focuses where possible contributions
+can be made.
+
+\subsection{Multivariate community indicator framework}
+
+Multivariate community indicator framework is a comprehensive approach for achieving objectives \textcolor{blue}{1, 2} and \textcolor{blue}{4}, 
+we will build it with possible improvements.
+Three data matrices (Zhang 2008 \cite{Zhang2008}; Farara and Burt 1993 \cite{Farara1993}; Wood 2004 \cite{Wood2004}) will be used for it:
+the taxa matrix (biological response), the environmental covariate matrix, and the stressor (chemical) matrix.
+Furthermore, quantitative indices that summarize sediment contamination and zoobenthic community composition
+will be designed and applied meanwhile controlling the natural variability. 
+Its basic steps are summarized as follows:
+
 \begin{enumerate}
-    \item \textbf{Sediment contamination assessment}
+    \item \textbf{Measure sediment contamination and select reference sites}
     
-    Apply an assessment method to chemical element concentrations to evaluate pollutant levels, 
-    interpret pollutant patterns among sites, and identify key contaminants.
+    \emph{Motivation: establish a defensible composite measure that reflects a contamination gradient and identify 
+    least disturbed sites that serve as reference locations.}
 
-    \item \textbf{Zoobenthic community structure discriminant model of environmental variables}
+    Perform Principal Component Analysis (PCA) on elements of the stressor matrix;
+    filter and interpret qualified pollutant Principal Components (PCs) from which to form a
+    composite contamination score. Designate sites with the scores indicative of minimally-disturbed
+    levels as reference sites from which to identify their putative "reference condition" assemblages.
 
-    Filter reference sites based on assessed stress levels, assuming that human impact is minimal or absent, 
-    and that the community structure is primarily shaped by natural environmental variability.
-
-    Explore the relationship between minimally impacted community structure and environmental variables, 
-    and build a predictive model to infer the expected community structure under natural conditions (without human disturbance).
+    \item \textbf{Predict 'reference condition' community composition across environmental gradients} 
     
-    Given the limited environmental variables and other potentially unmeasured or unmeasurable environmental factors, 
-    it is nearly impossible to train a fully quantitative inference model from environmental variables to taxa.
+    \emph{Motivation: predict the variation in community composition as controlled by environmental covariates
+    to disentangle the pollution-driven deviation in the community composition.}
 
-    Therefore, constrained predicted values should be constructed and applied to avoid overfitting 
-    and to extract limited yet informative inferences about community structure using available environmental variables.
+    Perform hierarchical agglomerative cluster analysis of the biota of reference-site samples to identify
+    distinct groups of taxa; train a discriminant model to predict the biological assemblages present at 
+    a location on the basis of the location’s environmental conditions. 
+    Thus, sites having the same biological assemblage are considered environmentally homogeneous.
 
-    \textit{It requires the following additional steps:}:
-    \begin{itemize}
-        \item \textbf{Partition the reference sites into different groups} based on their taxa composition.
-        \item Build a discriminant model \textbf{between the taxa composition groups and environmental variables}.
-    \end{itemize}
+    \item \textbf{Measure community composition (ZCI) for environmentally homogeneous sites}
 
-    The resulting predicted group labels provide more reliable information, as the limited 
-    environmental variables are only used to classify sites into taxa composition groups that were 
-    predefined from the reference sites.
+    \emph{Motivation: construct a numerical index for each biological assemblage to summarize
+    community composition for sites with similar environmental conditions.}
 
-    \item \textbf{Partition all sites into comparable taxa composition groups}
+    Within each predicted cluster, apply ordination (e.g., PCA/NMDS) to summarize taxa information;
+    derive the measurement results as ZCI with defined scoring rules.
+    Sites deviating from the reference site centroid are considered disturbed by pollution,
+    they compromise the disturbance-relevant ZCI results.
+
+    \item \textbf{Quantify the relationship between contamination level and ZCI}
     
-    Apply the discriminant model to all sites, including degraded and intermediate sites, 
-    to assign each site to one of the taxa composition groups. 
-    The group positions are fixed based on reference site partitioning.
+    \emph{Motivation: quantify how community composition responds to contamination levels}
 
-    \item \textbf{Measure the distance between each site and the reference and degraded endpoints within each taxa composition group}
-
-    Scale the taxa composition structure and define a metric to measure the 
-    distance between each site and the reference and degraded endpoints within each group.
-    Given similar environmental conditions across the group, differences in taxa composition are assumed to be caused by human disturbance.
-
-    \item \textbf{Quantitative regression to assess the relationship between the stressor level and the taxa composition structure}
-    
-    Variations in taxa composition from the reference endpoint should be explained by the 
-    relative stress level of each site. A quantitative regression model can assess this relationship.
-    Considering the large number of potential ecological influences, non-linear quantile regression is employed 
-    to explore patterns beyond traditional mean regression.
-
+    Fit regression models of ZCI deviation versus contamination score to capture deterministic relationships 
+        and stochastic variation that shapes the conditional distributional response.
+        Determining a suitable relationship pattern, e.g., smooth linear or breakpoint-based piecewise,
+        is the key to the first step.
+        If the latter exists, the following tasks will be to identify (1) the level of contamination at which the breakpoint(s) occur and
+        (2) the benchmark(s) of ZCI representative of these crucial contamination levels.
 \end{enumerate}
 
-\subsection{Potential Impacts and Further Questions}
 
-Through achieving these objectives, there is a potential to significantly enhance the understanding of
-the sediment contamination within the \textcolor{blue}{Huron-Erie corridor} and to develop 
-a more robust zoobenthic community indicator that can be used to infer sediment contamination levels.
 
-\textbf{Several benthic integrity assessment relevant questions arise and might be answered from the implementation of these objectives},
-tentatively listed as follows:
-\begin{itemize}
-    \item Is there a generally applicable sediment contamination assessment method that can be applied to different types of 
-    environmental conditions, or does the method need to be tailored to specific conditions?
+\subsection{Spatial heterogeneity test and incorporation}
 
-    \item To what extent the clustering-discriminant model
-    \footnote{The clustering and discriminant methods are bundled together to form a single step in the framework. 
-    Its purpose is to extract confined information(groups) from the selected sites, 
-    fit a discriminant model of environmental variables
-    for the groups, and then apply the model to all sites to assign them to the groups.}
-    can effectively capture the natural variability in taxa composition,
-    and how the clustering parts, which are applied on different \textbf{partitions} in contamination assessment results,
-    can shape the discriminant model?
+Objective \textcolor{blue}{3} is to ensure the unmodelled spatial patterns do not confound the regression results.
+Ecological data often exhibit spatial autocorrelation—nearby sites tend to have similar communities—so
+failing to include spatial structure can lead to biased estimates and inflated error rates.
+The principal coordinates of neighbour matrices (PCNM) method will be applied to transform spatial distances among sites into orthogonal spatial
+predictors that can be incorporated into regression or canonical analyses \cite{Borcard2002PCNM, Dray2006SpatialEigenfunction, GriffithPeresNeto2006SpatialFiltering}.
 
-    \item How to construct the measurement of zoobenthic community structure according to the contamination assessment results 
-    to support the inference model? To what extent should the two measurements be correlated but meanwhile keeping partial independence 
-    to ensure their respective interpretability?
+PCNM eigenvectors from the Euclidean distance matrix will capture spatial structure at different scales \cite{Borcard2002PCNM, GriffithPeresNeto2006SpatialFiltering}.
+For each environmental cluster of sample sites, we will test for spatial heterogeneity by regressing the ZCI 
+derived for that group of sites against PCNM vectors 
+to identify significant spatial predictors not explained by environmental variables.
+Selected PCNM variables will be incorporated as covariates in quantile regression models to control spatial autocorrelation.
+% Variance partitioning will help control the correlation among contamination levels across space,
+% improving the accuracy in estimating the ZCI-contamination relationship.
 
-    \item How to link the measurement of zoobenthic community structure to probability measurement of sediment contamination level
-     - degraded, especially in areas with intermediate anthropogenic influence.
-\end{itemize}
+\subsection{Piecewise quantile regression for breakpoint in quantile relationship}
+
+Objective~\textcolor{blue}{4} is to use a piecewise quantile regression to model the relationship 
+between sediment contamination levels and a ZCI,
+which identifies breakpoints in the ZCI-contamination relationship within the multivariate community indicator framework. 
+Piecewise quantile regression (PQRM) is chosen for its ability to estimate conditional quantiles 
+of a response without assuming a specific parametric form \cite{Cade2003,Huang2017}, 
+to model the entire conditional distribution rather than just the mean \cite{Cade2003},
+and to estimate parameters that are robust to outliers or heteroscedastic variance \cite{Huang2017}.
+In the ecological context, quantile regression can reveal abrupt changes in zoobenthic community 
+composition associated with specific contamination levels at different quantiles 
+(e.g., high quantile representing sensitive taxa)
+and detect breakpoints that indicate ecological thresholds \cite{Jabed2020,Spake2022,Daily2012}.
+
+It is informative to detect threshold(s) in contamination levels across which the slope of the ZCI–contamination relationship 
+changes abruptly, indicating points where benthic communities change their way in responding to contamination. 
+Higher quantiles may reveal steeper changes than median quantiles, highlighting vulnerable taxa. 
+Comparing breakpoints across environmentally distinct clusters (if the comparison across environmental gradients is feasible)
+will show whether thresholds vary among environmental gradients.
+
+
+\subsection{Indicator power and robustness with respect to sample size}
+The goal of Objective~\textcolor{blue}{5} is to evaluate how reliably
+the ZCI detects sediment contamination gradients under varying sampling restrictions and conditions.
+Two primary targets can be (1) exploring the minimum size of training data that supports the reliable estimation 
+of key parameters (e.g., slopes, breakpoints)\cite{Spake2022} in the ZCI–contamination relationship; 
+(2) how large a test set should be used to determine whether a new site falls above or below 
+particular threshold(s) with acceptable probabilistic confidence when it truly does so.
+
+
+Robustness analyses are essential because bioindicator performance can deteriorate when sample sizes are small, variance components are poorly estimated, or site selection produces hidden pseudoreplication \cite{Hurlbert1984Pseudo}. Power and precision directly influence management credibility; underpowered indicators risk Type II errors (failing to flag degraded conditions) while unstable estimates inflate Type I error rates in threshold detection \cite{Osenberg1994ImpactPower,Fairweather1991MonitoringPower}.
+
+The analytical approach is tentatively to use bootstrap resampling and subsampling to evaluate ZCI robustness.
+Bootstrap resampling may generate sampling distributions for key parameters (slopes, breakpoints, pseudo-$R^2$),
+while subsampling could construct precision curves by repeatedly selecting subsets of sites across sample sizes.
+Power analysis will potentially simulate datasets under null and alternative hypotheses to compute detection power
+for contamination effects and threshold shifts. Spatial autocorrelation may need to adjust effective sample sizes,
+and breakpoint reliability could be assessed through confidence interval width criteria or other suitable metrics.
+
+
+Results will identify optimal sampling design (sites per cluster) and provide decision-support tables
+linking confidence levels to required sampling effort. Higher quantiles may require larger samples due to greater dispersion,
+while also elevating the potential concerns regarding spatial autocorrelation.
 
 
 

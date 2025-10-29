@@ -1,88 +1,36 @@
 \subsection{Collect comparable data}
 
-Currently, there are three available datasets(matrices): zoobenthic community data(311 by 16),
-chemical data(104 by 30) and environmental data(289 by 7).
-These metrices can be merged by the station ID, which gives a comparable dataset with 104 rows
+Currently, there are three available datasets (matrices): zoobenthic community data (311 by 16),
+chemical data (104 by 30), and environmental data (289 by 7).
+These matrices can be merged by the station ID, which gives a comparable dataset with 104 rows
 and 53 columns. 
-
-After merging the three data set on station IDs that are common to all three set,
-there is completed matrix with \textbf{104 rows and 53 columns} from the three variable types.
-\footnote{The three types(chemical, environmental, taxa) were denoted and stored as a higher column index in the pandas dataframe,
-which makes the table more readable. Later, the results from upcoming data operations that apply on 
-across all rows will also be stored in this way.}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/merged_104_completed_observations.png}
-    \caption{Distribution of the observations with completed three types of data.}
-    \label{fig:merged_104_completed_observations}
-\end{figure}
-
-\subsection{Pre-process taxa data}
-
-Small sample size and poor data quality are two common and unignorable issues in the zoobenthic dataset,
-outliers in the data needs to be transformed or removed to improve the data quality,
-which helps to eliminate the dominance of outliers in later analysis.
-
-In this stage, I first explored the distribution of the taxa data and detected the outliers by 
-using IQR method. After confirming the existence of outliers, octave transformation
-was applied on the taxa data, as suggested in Jian's analysis, to reduce the impact of outliers and
-balance the influence of all taxons.
-
-The octave transformation is applied by the following formula, where the proportion of a taxa 
-of a site it the proportion of the taxa in the total density of all taxa in the site.
-
-\[
-x_\text{octave transformed} = \log_2(100 \times (\text{proportion of taxa}  + 0.01))
-\]
-
-After the transformation, I checked the distribution and outliers again, and there were 
-less outliers and flatter distribution of the taxa data.
-
-\begin{center}
-    \fbox{%
-        \parbox{0.95\linewidth}{%
-
-            \begin{center}
-                \textbf{---Mathematical coverage of the operation at this stage---}
-            \end{center}
-
-            Let $\mathbf{Y} \in \mathbb{R}^{n \times t}$ denote the raw taxa abundance matrix, where $n$ is the number of sites and $t$ is the number of taxa.
-
-            \textbf{Outlier detection:} For each taxon $j$, compute the interquartile range (IQR) of the abundances $\{Y_{ij}\}_{i=1}^n$ and identify outliers as values outside $[Q_1 - 1.5 \cdot \text{IQR}, Q_3 + 1.5 \cdot \text{IQR}]$, where $Q_1$ and $Q_3$ are the first and third quartiles.
-
-            \textbf{Octave transformation:} For each site $i$ and taxon $j$, compute the proportion $p_{ij} = \frac{Y_{ij}}{\sum_{k=1}^t Y_{ik}}$. The octave-transformed value is:
-            \[
-            X_{ij} = \log_2\left(100 \cdot (p_{ij} + 0.01)\right)
-            \]
-            where $X_{ij}$ is the transformed abundance for site $i$, taxon $j$.
-
-            After transformation, the distribution of taxa abundances is more balanced and outliers are reduced.
-        }
-    }
-\end{center}
-
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=\textwidth]{../results/preliminary_results/raw_taxa_outliers_boxplots.png}
-%     \caption{Boxplots of the raw taxa data, showing outliers before octave transformation.}
-%     \label{fig:raw_taxa_outliers_boxplots}
-% \end{figure}
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/octave_transformed_taxa_boxplots.png}
-    \caption{Boxplots of the octave-transformed taxa data, showing reduced outliers and more balanced distribution.}
-    \label{fig:octave_transformed_taxa_boxplots}
+    \includegraphics[width=\textwidth]{../results/preliminary_results/merged_104_completed_observations.png}
+    \caption{Distribution of the 104 sites with completed three types of data.}
+    \label{fig:merged_104_completed_observations}
 \end{figure}
 
-\subsection{Assess sediment contamination}
+Figure \textcolor{blue}{\ref{fig:merged_104_completed_observations}} shows the distribution of the 104 sites
+with completed three types of data, these observations are generally evenly distributed
+across the Huron-Erie Corridor, which backs up the belief in sampling aspect that the top \(p\%\) sites
+in stress level should have no or minimal human disturbances.
 
-The sediment contamination is assessed by applying PCA on the chemical data.
-In this work, instead of standardizing the chemical data, log-transformation was applied on the chemical data to 
+\subsection{Assess sediment contamination and Identify reference and degraded sites}
+
+In this stage, log-transformation was applied on the chemical data to 
 reduce the dominance of some chemical variables that have large values. 
-Then, PCA was applied on the transformed chemical data and the distribution of loadings across the chemical variables
-was visualized by histogram for each principal component for later selecting step.
+Then, PCA was applied on the transformed chemical data 
+and the distribution of loadings across the chemical variables
+were computed for each principal component for the upcoming selecting PCs step.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{../results/preliminary_results/pca_loadings_chemical_updated.png}
+\caption{PCA loadings of the chemical data, showing the distribution of loadings across chemical variables}
+\label{fig:pca_loadings_chemical_updated}
+\end{figure}
 
 Not all PCs are used to compute the stress score, there are three criteria to select the suitable PCs:
 
@@ -95,185 +43,117 @@ Not all PCs are used to compute the stress score, there are three criteria to se
 
 After applying the above criteria, 'PC1', 'PC2', 'PC3', 'PC5', 'PC6', 'PC7', 'PC9' are selected as the suitable PCs.
 
-Based on the selected PCs, I normalized these PCs to the range [0, 1] to eliminate the effect of differing scales
+Based on the selected PCs, these PCs were normalized to the range [0, 1] to eliminate the effect of differing scales
 (due to their eigenvalues), reflecting the real-world situation that the toxicity of chemical elements is
 not directly comparable and not always proportional to their concentrations. Subsequently,
-I summed the normalized PCs, considering the directionality of positive and negative loadings,
-to obtain the "SumReal" score\footnote{As done by Jian in her sediment contamination assessment.} 
+the normalized PCs were summed, considering the directionality of positive and negative loadings,
+to obtain the "SumReal" score\footnote{As done by Jian in her sediment contamination assessment}, 
 for each sample, which serves as a measure of sediment contamination.
 
-After this step, each observation in the dataset has a "stress score"(which is the "SumReal" score as Jian defined in her thesis),
-the higher the score, the more contaminated the sediment is.
-
-\begin{center}
-    \fbox{%
-        \parbox{0.95\linewidth}{%
-
-            \begin{center}
-                \textbf{---Mathematical coverage of the operation at this stage---}
-            \end{center}
-
-            Mathematically, let $\mathbf{X} \in \mathbb{R}^{n \times p}$ denote the log-transformed chemical data matrix, where $n$ is the number of samples and $p$ is the number of chemical variables. 
-            Principal component analysis (PCA) is applied to $\mathbf{X}$ to obtain principal components:
-            \[
-            \mathbf{Z} = \mathbf{X} \mathbf{W}
-            \]
-            where $\mathbf{W} \in \mathbb{R}^{p \times k}$ contains the 
-            loadings of the selected $k$ principal components via the above criteria.
-
-            Let $\mathbf{z}_j$ denote the $j$-th selected principal component (column of $\mathbf{Z}$). Each $\mathbf{z}_j$ is normalized to $[0, 1]$:
-            \[
-            \tilde{\mathbf{z}}_j = \frac{\mathbf{z}_j - \min(\mathbf{z}_j)}{\max(\mathbf{z}_j) - \min(\mathbf{z}_j)}
-            \]
-            The overall sediment contamination score ("SumReal") for sample $i$ is then computed as:
-            \[
-            \text{SumReal}_i/\text{(stress score)}_i = \sum_{j=1}^k \alpha_j \tilde{z}_{ij}
-            \]
-            where $\alpha_j$ reflects the directionality (sign) and importance of each PC,
-            to each component \(z_j\) it should be set to 1 for PCs mainly with positive loadings on pollutants, and 
-            -1 for PCs mainly with negative loadings on pollutants.
-
-            Thus, each sample receives a "stress score" $\text{SumReal}_i$ that quantifies sediment contamination based on the selected and normalized principal components.
-
-        }
-    }
-\end{center}
-
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/pca_loadings_chemical.png}
-    \caption{PCA loadings of the chemical data, showing the distribution of loadings across chemical variables.}
-    \label{fig:chemical_pca_loadings}
-\end{figure}
-
-
-\subsection{Identify reference and degraded sites}
+After this step, each observation in the dataset has a "stress score" ("SumReal" score, as Jian defined in her thesis),
+the lower the score, the more contaminated the sediment is.
 
 Based on the "SumReal" score, reference and degraded sites were identified by selecting
 the lowest 20\% and highest 20\% of the "stress score", respectively.
 There selected reference sites will be viewed as minimally disturbed sites, and 
-their taxa compositions will be though as determined completely by the environmental factors.
+their taxa compositions will be thought as determined completely by the environmental factors.
 
 
-Therefore, these references will support build a purely tidy model that predicts what
+These references support building a purely tidy model that predicts what
 a pristine taxa composition should be given a specific set of environmental conditions
 (if the distribution of the
 environmental factors is uniform across all possible values or fit to the real world distribution).
 
-
-\begin{center}
-    \fbox{%
-        \parbox{0.95\linewidth}{%
-
-            \begin{center}
-                \textbf{---Mathematical coverage of the operation at this stage---}
-            \end{center}
-
-            Mathematically, let $S_i$ denote the "SumReal" stress score for site $i$ $(i = 1, \ldots, n)$. 
-            Define the $q$-th quantile of the stress scores as $Q_q(S)$.
-            The sets of reference sites ($\mathcal{R}$) and degraded sites ($\mathcal{D}$) are then defined as:
-            \[
-                \mathcal{R} = \left\{ i : S_i \leq Q_{0.2}(S) \right\}, \qquad
-                \mathcal{D} = \left\{ i : S_i \geq Q_{0.8}(S) \right\}
-            \]
-            where $Q_{0.2}(S)$ and $Q_{0.8}(S)$ are the 20th and 80th percentiles of the stress scores, respectively.
-            Sites in $\mathcal{R}$ are considered minimally disturbed (reference), while sites in $\mathcal{D}$ are considered highly degraded.
-
-        }
-    }
-\end{center}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{../results/preliminary_results/stress_levels_map_and_boxplot.png}
+    \caption{Map and boxplot of stress levels across three blocks of stress levels: 
+    reference(top 20\% of stress scores), degraded(bottom 20\% of stress scores) and others}
+    \label{fig:stress_levels_map_and_boxplot}
+\end{figure}
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{../results/preliminary_results/taxa_abundance_by_site_label.png}
-    \caption{Taxa distribution by site label, showing the potential taxa composition differences across different level of 
-    sediment contamination.}
-    \label{fig:chemical_pca_loadings_histogram}
+    \caption{Taxa abundance distribution by site label, 
+    showing the potential taxa composition differences 
+    across three blocks of sediment contamination}
+    \label{fig:taxa_abundance_by_site_label}
 \end{figure}
 
-\subsection{Cluster reference sites by community composition}
+Figure \textcolor{blue}{\ref{fig:taxa_abundance_by_site_label}} shows the box plots of taxa abundance across the three blocks.
+Even though it is not accurate to know the taxa composition across stress levels,
+but a good result is that the taxa abundance distribution is different across the types: degraded, intermediate and reference.
+Because such blocking operation controls the human disturbances to some extent, and
+we hope to see the taxa composition differences across these disturbance levels.
+Although Figure \textcolor{blue}{\ref{fig:taxa_abundance_by_site_label}} might not provide a complete and satisfying 
+picture, but it is acceptable considering that we have not controlled the environmental factors yet.
 
-Given the fact that taxa composition still varies across the reference sites due to the various environmental conditions,
-applying clustering on the reference sites can help us to identify the major patterns of the taxa composition
-under the minimal disturbance level.
+\clearpage
+\subsection{Cluster reference sites by taxa community composition}
 
-This clustering results will tell us the major groups of taxa compositions, 
-which should correspond to major types of environmental conditions that help shape the taxa compositions into these groups.
-A taxa composition falling into one of these groups with the same or similar environmental conditions
-should be viewed as an approximately "normal" taxa composition, which means it may be minimally disturbed by human activities.
+In this step,  IQR method was applied to detect outliers in the taxa data, 
+and octave transformation was applied as suggested in Jian's analysis,
+to reduce the impact of outliers and balance the influence of all taxa.
 
-\begin{center}
-    \fbox{%
-        \parbox{0.95\linewidth}{%
+The octave transformation is applied by the following formula, where the proportion of a taxon 
+at a site is the proportion of the taxon in the total density of all taxa at the site.
 
-            \begin{center}
-                \textbf{---Mathematical coverage of the operation at this stage---}
-            \end{center}
+\[
+x_\text{octave transformed} = \log_2(100 \times (\text{proportion of taxa}  + 0.01))
+\]
 
-            Let $\mathcal{R}$ denote the set of reference sites identified previously. For each site $i \in \mathcal{R}$, let $\mathbf{y}_i \in \mathbb{R}^t$ represent its taxa composition vector, where $t$ is the number of taxa.
+After the transformation, there were less outliers and flatter distribution of the taxa data.
 
-            To identify major patterns among reference sites, we apply a clustering algorithm (e.g., $k$-means or hierarchical clustering) to the set $\{\mathbf{y}_i : i \in \mathcal{R}\}$. The goal is to partition the reference sites into $K$ clusters $\mathcal{C}_1, \ldots, \mathcal{C}_K$ such that:
-            \[
-            \mathcal{R} = \bigcup_{k=1}^K \mathcal{C}_k, \qquad \mathcal{C}_k \cap \mathcal{C}_l = \emptyset \text{ for } k \neq l
-            \]
-            and sites within each cluster $\mathcal{C}_k$ have similar taxa compositions.
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{../results/preliminary_results/octave_transformed_taxa_boxplots.png}
+    \caption{Boxplots of the original vs octave-transformed taxa data, showing reduced outliers and more balanced distribution.}
+    \label{fig:octave_transformed_taxa_boxplots}
+\end{figure}
 
-            The resulting clusters $\mathcal{C}_1, \ldots, \mathcal{C}_K$ represent the major types of minimally disturbed taxa compositions, which can be further analyzed in relation to environmental variables.
-
-        }
-    }
-\end{center}
+Based on the octave-transformed taxa data, clustering was applied to identify major taxa community patterns across different environmental conditions.
+The clustering was performed using hierarchical clustering method, and the number of clusters \(K\) was set to 3 based on the dendrogram analysis.
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{../results/preliminary_results/clustering_on_references_taxa.png}
-    \caption{Clustering results of reference sites by taxa composition, showing the major groups of minimally disturbed taxa compositions.}
+    \caption{A possible example of clustering results of reference sites by taxa composition, showing the major groups of minimally disturbed taxa compositions.}
     \label{fig:clustering_on_references_taxa}
 \end{figure}
 
+Figure \textcolor{blue}{\ref{fig:clustering_on_references_taxa}} is an example of the clustering results on references, 
+and it is not the final clustering result. It was noticeable that one cluster (orange color) has only 2 reference sites in 
+it, which is not enough to represent a stable "ideal" taxa composition and to fit a discriminant function for its cluster.
+
+Considering it is in the preliminary stage, this example is presented here only for showing
+the clustering process and the potential taxa community patterns across different environmental conditions.
+A better clustering result needs to include enough reference sites in each cluster for constructing a stable 
+"ideal" taxa composition benchmark and to support the upcoming fitting of a discriminant function, \(f_{k, \tau}(z)\).
+However, the sampled environmental conditions are also important to be considered, a uniform sample-environment distribution 
+or a proportional to the real world distribution is better for the clustering to be meaningful.
+
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/taxa_abundance_by_cluster.png}
-    \caption{Taxa abundance by cluster, showing the distribution of taxa across different clusters of reference sites.}
-    \label{fig:taxa_abundance_by_cluster}
+    \includegraphics[width=\textwidth]{../results/preliminary_results/taxa_density_by_cluster.png}
+    \caption{"Ideal" individual taxa density across clusters, showing the distribution of taxa across different clusters of reference sites.
+    (The disappearance of the density curve of some taxa in a cluster means that the taxa is not present in the cluster.)}
+    \label{fig:taxa_density_by_cluster}
 \end{figure}
 
-\subsection{Build a discriminant model for habitat classification.}
+Figure \textcolor{blue}{\ref{fig:taxa_density_by_cluster}} shows the taxa density distribution across clusters.
+The sites in each cluster are both controlled by the environmental conditions(clustering results)
+and the human disturbances(reference sites, no or minimal human disturbances), 
+so we hope to see their taxa community compositions(density curves) difference across 
+the current clusters.
 
-At this stage, a purely tidy model that predicts the taxa composition with given environmental conditions is built.
-Discriminant function(classification function) was fitted on these reference sites to 
-predict cluster memberships(labels) given their environmental conditions.
+\subsection{Fit Discriminant Function of environmental factors for taxa clusters}
 
-Because the response variable is categorical, applying the fitted discriminant function 
-on all sites given their environmental conditions will group the sites into 
-the selected taxa clusters. 
-There are reference and degraded sites within each cluster, they can be used to construct 
-the theoretical \textit{best} and \textit{worst} individual in aspects of taxa compositions and stress scores,
-which will be used for ordination method to get ZCI scores later.
-
-\begin{center}
-    \fbox{%
-        \parbox{0.95\linewidth}{%
-
-            \begin{center}
-                \textbf{---Mathematical coverage of the operation at this stage---}
-            \end{center}
-
-            Let $\mathcal{C}_1, \ldots, \mathcal{C}_K$ denote the clusters of reference sites identified by taxa composition. For each site $i$, let $\mathbf{e}_i \in \mathbb{R}^d$ be its vector of environmental variables, and let $c_i \in \{1, \ldots, K\}$ be its cluster label.
-
-            A discriminant function $f: \mathbb{R}^d \to \{1, \ldots, K\}$ is trained on the reference sites $\{(\mathbf{e}_i, c_i) : i \in \mathcal{R}\}$ to predict cluster membership from environmental variables:
-            \[
-            \hat{c}_i = f(\mathbf{e}_i)
-            \]
-            Applying $f$ to all sites assigns each site to a predicted cluster:
-            \[
-            \forall i \in \{1, \ldots, n\},\quad \hat{c}_i = f(\mathbf{e}_i)
-            \]
-            Within each predicted cluster, sites can be further analyzed to compare reference and degraded sites, enabling the construction of theoretical "best" (reference) and "worst" (degraded) taxa compositions and associated stress scores for each habitat type.
-
-        }
-    }
-\end{center}
+At this stage, a discriminant function(classifier) was fitted on these reference sites to 
+predict cluster memberships(labels) with their environmental factors.
+Table \textcolor{blue}{\ref{tab:lda_coeffs}} shows the coefficients of the fitted discriminant function,
+and Table \textcolor{blue}{\ref{tab:lda_report}} shows the classification report of the fitted discriminant function
+on the training set of reference sites.
 
 \begin{table}[!h]
 \centering
@@ -284,16 +164,16 @@ which will be used for ordination method to get ZCI scores later.
  & $Class_1$ & $Class_2$ & $Class_3$ \\
 \midrule
 Intercept & -121.154 & -28.769 & 18.883 \\
-Total Organic Carbon (LOI \%) & 0.394 & -0.429 & 0.156 \\
+Organic Carbon(LOI) & 0.394 & -0.429 & 0.156 \\
 Water Depth (m) & -0.114 & 0.110 & -0.039 \\
 Water Temperature & 4.411 & 0.927 & -0.712 \\
 Dissolved Oxygen Concentration (mg/L) & 1.807 & 0.722 & -0.439 \\
-Median Particle Size (Phi) & 2.276 & 1.229 & -0.689 \\
+Median Particle Size & 2.276 & 1.229 & -0.689 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!h]
 \centering
 \caption{Classification Report}
 \label{tab:lda_report}
@@ -311,66 +191,34 @@ weighted avg & 0.36 & 0.60 & 0.45 & 5 \\
 \end{tabular}
 \end{table}
 
+\subsection{Apply the Discriminant Function to rest disturbed sites}
+Given the fitted discriminant function, apply it on the rest disturbed sites with
+their environmental factors to group these sites into 
+the existing taxa clusters.
 
+In this preliminary analysis, in addition to the reference sites,
+there were degraded sites within each cluster.
+These degraded sites were used to construct the theoretical \textit{worst} endpoints
+and the reference sites were used to construct the theoretical \textit{best} endpoints.
+The two endpoints in each cluster have best and worst taxa compositions and highest and lowest stress scores,
+and they will be used in ordination method to construct the ZCI scores for other sites in the cluster.
 
-\subsection{Construct endpoints and compute ZCI via ordination.}
+\subsection{Construct endpoints and compute Zoobenthic Condition Index (ZCI)}
 
-After all sites have been assigned to clusters, endpoints need to be constructed within each cluster 
-to construct the "standard" taxa compositions under the lowest(\textit{best individual})
-and highest(\textit{worst individual}) stress levels.
+After all sites were assigned to clusters,
+endpoints were constructed by taking the mean of selected 
+subset of reference and degraded sites in each cluster.
 
-The \textbf{mean abundance} of taxa in a small subset, like 3 to 5, of the reference sites with the lowest 
-"stress score" can be used as the \textit{best} endpoint, and vice versa, the \textbf{mean abundance} of a small subset of the 
-degraded sites with the highest "stress score" can be used as the \textit{worst} endpoint.
+The \textbf{mean abundance} of taxa in a small subset, like 3 to 5, of the reference sites with the highest 
+"stress score" was used as the \textit{best} endpoint,
+and vice versa,
+the \textbf{mean abundance} of a small subset of the 
+degraded sites with the lowest "stress score" was used as the \textit{worst} endpoint.
 
-The \textit{best} and \textit{worst} endpoints are used to perform Bray-Curtis ordination,
-which is a method to scale the taxa compositions under the lowest and highest stress levels.
-The ordination results provide scores for each site in each cluster, and these scores are 
-converted into range [0, 1] to be used as Zoobenthic Condition Index, where the degraed endpoint as 
-0 and the reference endpoint as 1.
-\begin{center}
-    \fbox{%
-        \parbox{0.95\linewidth}{%
+Table \textcolor{blue}{\ref{tab:endpoints}} shows the taxa compositions of the endpoints in each cluster,
+and the Figure \textcolor{blue}{\ref{fig:zci_distribution_across_clusters}} shows the distribution of ZCI scores across clusters.
 
-            \begin{center}
-                \textbf{---Mathematical coverage of the operation at this stage---}
-            \end{center}
-
-            Mathematically, for each cluster $k$, let $\mathcal{R}_k$ and $\mathcal{D}_k$ denote the sets of reference and degraded sites in cluster $k$, respectively. Define the \textit{best} endpoint $\mathbf{y}_\text{best}^{(k)}$ as the mean taxa composition of the $m$ reference sites in $\mathcal{R}_k$ with the lowest stress scores, and the \textit{worst} endpoint $\mathbf{y}_\text{worst}^{(k)}$ as the mean of the $m$ degraded sites in $\mathcal{D}_k$ with the highest stress scores:
-            \[
-            \mathbf{y}_\text{best}^{(k)} = \frac{1}{m} \sum_{i \in \mathcal{B}_k} \mathbf{y}_i, \qquad
-            \mathbf{y}_\text{worst}^{(k)} = \frac{1}{m} \sum_{i \in \mathcal{W}_k} \mathbf{y}_i
-            \]
-            where $\mathcal{B}_k \subset \mathcal{R}_k$ and $\mathcal{W}_k \subset \mathcal{D}_k$ are the selected subsets.
-
-            For each site $i$ in cluster $k$, compute the Bray-Curtis dissimilarity to both endpoints:
-            \[
-            d_\text{best}(i) = \text{BC}(\mathbf{y}_i, \mathbf{y}_\text{best}^{(k)}), \qquad
-            d_\text{worst}(i) = \text{BC}(\mathbf{y}_i, \mathbf{y}_\text{worst}^{(k)})
-            \]
-            where $\text{BC}(\cdot, \cdot)$ denotes the Bray-Curtis dissimilarity.
-
-            The Zoobenthic Condition Index (ZCI) for site $i$ is then scaled to $[0, 1]$:
-            \[
-            \text{ZCI}_i = \frac{d_\text{worst}(i)}{d_\text{best}(i) + d_\text{worst}(i)}
-            \]
-            so that $\text{ZCI}_i = 1$ at the best endpoint and $\text{ZCI}_i = 0$ at the worst endpoint.
-
-        }
-    }
-\end{center}
-
-\textbf{Honestly, I did not what is the ordination method here} and why it can compress the 16 taxa variables into 
-a single value to reflect the distance to the endpoints, I will check this method later. Now,
-I just asked GPT to provide me code to implement this method and receive the zoobenthic composition scores 
-for each site and convert them into valued-based ZCI scores.
-
-\textbf{But intuitively, I think there might be vector-based ZCI scores} that can be computed for each site and compared with 
-a set of reference sites, which should provide a more accurate assessment of the zoobenthic condition than a value-based ZCI.
-
-
-
-\begin{table}
+\begin{table}[!h]
 \centering
 \caption{Best and Worst Taxa Compositions by Pattern}
 \label{tab:endpoints}
@@ -406,64 +254,188 @@ taxa pattern & 1.000 & 2.000 & 3.000 & 1.000 & 2.000 & 3.000 \\
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/zci_vs_stress_and_taxa_abundance.png}
-    \caption{ZCI vs Stress Scores and the Distribution of Taxa Abundance across Taxa Patterns }
-    \label{fig:zci_vs_stress_and_taxa_abundance}
-\end{figure}
-
-\begin{figure}[!h]
-    \centering
     \includegraphics[width=\textwidth]{../results/preliminary_results/ZCI_distribution_across_clusters.png}
     \caption{ZCI Distribution across Clusters, showing the variation of ZCI scores within each cluster.}
     \label{fig:zci_distribution_across_clusters}
 \end{figure}
 
-\subsection{Evaluate the ZCI vs  SumRel relationship by quantile regression}
+The \textit{best} and \textit{worst} endpoints are used to perform Bray-Curtis ordination,
+which scales the taxa compositions given the endpoints and compresses the 16 taxa variables into a single value
+to reflect the distance to the endpoints.
+In each cluster, the resulting ZCI scores of the two endpoints were converted to 0 and 1, 
+and the ZCI scores of other sites were transformed with the same scale, which is not a [0 ,1] range mapping,
+but a value-based ZCI score that reflects the distance to the endpoints.
+
+Figure \textcolor{blue}{\ref{fig:zci_vs_stress_and_taxa_abundance}} 
+shows the scatter plot of ZCI scores vs stress scores and the box plot of taxa abundance across taxa clusters.
+One of the encouraging results is that the ZCI scores have correlation with the stress scores across three clusters,
+and the scatter plots in Figure \textcolor{blue}{\ref{fig:zci_vs_stress_and_taxa_abundance}}
+show very likely correlations between ZCI scores and stress scores.
+
+And to the lower half of the Figure \textcolor{blue}{\ref{fig:zci_vs_stress_and_taxa_abundance}},
+we hope to see the taxa abundance distribution differences across the three clusters 
+due to the different environmental conditions. 
+But this boxplot is not comparable to the boxplot shown in Figure \textcolor{blue}{\ref{fig:taxa_abundance_by_site_label}},
+because the Figure \textcolor{blue}{\ref{fig:taxa_abundance_by_site_label}} is the taxa abundance distribution controlled by 
+the human disturbance levels, while the Figure \textcolor{blue}{\ref{fig:zci_vs_stress_and_taxa_abundance}}
+shows the taxa abundance distribution controlled by environmental conditions.
+The differences in controlled conditions make it unreasonable to compare these two boxplots, even though
+they may look similar.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\textwidth]{../results/preliminary_results/zci_vs_stress_and_taxa_abundance.png}
+    \caption{ZCI vs Stress Scores and the Distribution of Taxa Abundance across Taxa Patterns}
+    \label{fig:zci_vs_stress_and_taxa_abundance}
+\end{figure}
+
+\subsection{Evaluate the ZCI vs SumRel relationship by quantile regression}
+
+Now, there were complete ZCI scores and stress scores for all sites,
+and their relationships were evaluated by quantile regression across clusters.
 
 To this step, within each cluster, I have had the ZCI scores and stress scores for each site,
 and they are value-based scores so that simple linear or quantile regression can be applied to them.
 
-A piecewise quantile regression was applied to the ZCI scores and stress scores within each cluster 
+A quantile regression was applied to the ZCI scores and stress scores within each cluster 
 to evaluate the relationship between them, a bias-corrected bootstrapping method was applied 
-to estimate the confidence intervals of the piecewise quantile regression coefficients.
+to estimate the confidence intervals of the quantile regression coefficients.
 
-\begin{center}
-    \fbox{%
-        \parbox{0.95\linewidth}{%
+Figure \textcolor{blue}{\ref{fig:qrm_quantile_regression_pattern_1}} to Figure \textcolor{blue}{\ref{fig:qrm_quantile_regression_pattern_3}}
+show the quantile regression results of different \(\tau\) values for each cluster.
+Stress score of 4, the horizontal red line, is marked as degraded threshold for all three clusters for convenience,
+and there are one or two visible quantile regression lines crossing the threshold value.
+The intersection of a \(\tau^*\) level quantile regression line and the horizontal red line
+provides the estimated percent of samples conditioned on the corresponding ZCI score
+to be less than or equal to the degraded threshold.
 
-            \begin{center}
-                \textbf{---Mathematical coverage of the operation at this stage---}
-            \end{center}
+The one-side p-value for null hypothesis that the relative stress level
+conditional on such ZCI score \(x_k^*\) is less than the degraded threshold \(H_0: \delta X < x_k^*\)
+can be computed as \(1 - \tau^*\). 
+As a potential example like Figure \textcolor{blue}{\ref{fig:qrm_quantile_regression_pattern_1}},
+quantile regression lines of \(\tau = 1\) and \(\tau = 0.77\) cross the degraded threshold
+at around \(ZCI = 0.25\) and \(ZCI = 0.8\) respectively, such results indicate that
+there are other quantile regression lines intersecting the degraded threshold between
+the ZCI scores of 0.25 and 0.8, and these quantile levels must fall between 0.77 and 1.
 
-            Let $\text{ZCI}_i$ denote the Zoobenthic Condition Index for site $i$, and let $\text{SumRel}_i$ denote the corresponding stress score. For each cluster $k$, we fit a quantile regression model to the data $\{(\text{SumRel}_i, \text{ZCI}_i) : i \in \mathcal{C}_k\}$:
-            \[
-            Q_\tau(\text{ZCI} | \text{SumRel}) = f_\tau(\text{SumRel})
-            \]
-            where $Q_\tau(\cdot | \cdot)$ denotes the $\tau$-th quantile of $\text{ZCI}$ given $\text{SumRel}$, and $f_\tau$ is a piecewise linear function estimated via quantile regression.
+In Appendix, there are piecewise quantile regression results for each cluster and 
+other techniques, like bootstrap or synthetic data generation, can be applied to
+enhance our understanding toward this inference method on top of the collected original data.
 
-            The coefficients of $f_\tau$ are estimated using a bias-corrected bootstrap method to obtain confidence intervals for the quantile regression estimates.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{../results/preliminary_results/qrm_quantile_regression_pattern_1.png}
+\caption{Quantile Regression Results for Cluster 1, showing the relationship between ZCI and stress scores.}
+\label{fig:qrm_quantile_regression_pattern_1}
+\end{figure}
 
-        }
-    }
-\end{center}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{../results/preliminary_results/qrm_quantile_regression_pattern_2.png}
+\caption{Quantile Regression Results for Cluster 2, showing the relationship between ZCI and stress scores.}
+\label{fig:qrm_quantile_regression_pattern_2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{../results/preliminary_results/qrm_quantile_regression_pattern_3.png}
+\caption{Quantile Regression Results for Cluster 3, showing the relationship between ZCI and stress scores.}
+\label{fig:qrm_quantile_regression_pattern_3}
+\end{figure}
+
+\clearpage
+\subsection{Extract spatial eigenvector by PCNM on simulated data}
+
+PCNM (Principal Coordinates of Neighbour Matrices) provides a set of orthogonal spatial eigenvectors that can be used as 
+covariates to model spatial structure (broad to fine scale) in subsequent analyses (e.g., quantile or generalized regression 
+on taxa or stress scores). 
+The workflow applied in the simulated data mirrors what will be done with true geographic information
+(projected site coordinates of the Huron-Erie Corridor and Detroit River sites):
+
+\begin{enumerate}
+    \item Compute pairwise Euclidean (or great-circle then projected) distances among sites. Real coordinates will first be projected to an equal-area / appropriate planar CRS to avoid distortion.
+    \item Determine a truncation threshold (here: maximum edge length of the minimum spanning tree / maximum nearest-neighbour distance) to ensure the distance graph is fully connected while suppressing unrealistically long links.
+    \item Replace distances greater than the threshold with a large value (or leave as is in a truncated matrix) and convert to a truncated distance matrix.
+    \item Apply double-centering (Gower centering) to obtain a spatially informed matrix whose eigen decomposition yields orthogonal axes ordered from broad (large-scale) to fine (small-scale) spatial structures.
+    \item Retain eigenvectors with positive spatial autocorrelation (screened by Moran's I \(> 0\) and, if needed, significance tests under permutation).
+    These become the candidate spatial predictors (denoted S). A subset S$_{sel}$ is chosen to avoid overfitting (e.g., forward selection with adjusted R$^2$ or information criteria) when added to ecological models.
+\end{enumerate}
+
+The three simulation figures illustrate how sampling design influences the scale and appearance of retained eigenvectors:
+
+\textbf{Figure \textcolor{blue}{\ref{fig:pcnm_simulation_1d_equally_spaced}}} (1D regular): With evenly spaced sites along a line, early (broad) eigenvectors resemble low-frequency sine/cosine waves capturing gradual longitudinal gradients. Progressively higher-order (not all shown) eigenvectors would introduce finer oscillations.
+ The regular spacing produces a clean hierarchy of spatial scales.
+
+\textbf{Figure \textcolor{blue}{\ref{fig:pcnm_simulation_2d_equally_spaced}}} (2D regular grid):
+On a lattice, broad-scale eigenvectors express smooth surfaces across both axes. 
+Subsequent eigenvectors increasingly capture checkerboard or banded patterns that 
+partition the grid into larger then smaller spatial patches. 
+The symmetry of the grid yields balanced representation of directions,
+which helps interpret broad-scale ecological gradients (e.g., upstream--downstream or depth-related trends) when transposed to real data.
+
+\textbf{Figure \textcolor{blue}{\ref{fig:pcnm_simulation_2d_randomly_spaced}}} (2D irregular): 
+Irregular (clustered / uneven) sampling causes eigenvectors to localize structure around denser site clusters and to stretch patterns across sparser regions. Broad-scale eigenvectors still reflect overall spatial extent, but intermediate components may appear asymmetric or warped because inter-site distances are uneven. This underscores the need, in the real dataset, to evaluate whether spatial coverage is sufficiently even; otherwise, model selection may prioritize localized eigenvectors that compensate for sampling gaps rather than true ecological gradients.
+
+\textit{Application to real data}: 
+Once applied to actual site coordinates, we will generate candidate PCNM eigenvectors, 
+screen for positive spatial autocorrelation, and incorporate a subset into quantile
+regression models. This aims to reduce spatial autocorrelation in residuals and
+improve inference on non-spatial covariates while enabling spatially explicit 
+variance interpretation.
+
+The simulations therefore validate that the procedure recovers interpretable multi-scale patterns under contrasting sampling schemes and highlight considerations (threshold choice, uneven spacing) prior to deploying PCNM on the empirical dataset.
 
 \begin{figure}[!h]
-    \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/pqrm_pattern_1_tau_0.5.png}
-    \caption{Quantile regression results of ZCI vs Stress Scores for cluster 1}
-    \label{fig:pqrm_pattern_1_tau_0.5}
+\centering
+\includegraphics[width=0.9\textwidth]{../results/preliminary_results/pcnm_simulation_1d_equally_spaced.png}
+\caption{PCNM simulation results for regular sampling in 1D space, showing the original sites and selected spatial eigenvectors.}
+\label{fig:pcnm_simulation_1d_equally_spaced}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{../results/preliminary_results/pcnm_simulation_2d_equally_spaced.png}
+\caption{PCNM simulation results for regular sampling in 2D space, showing the original sites and selected spatial eigenvectors.}
+\label{fig:pcnm_simulation_2d_equally_spaced}
 \end{figure}
 
 \begin{figure}[!h]
-    \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/pqrm_pattern_2_tau_0.5.png}
-    \caption{Quantile regression results of ZCI vs Stress Scores for cluster 2}
-    \label{fig:pqrm_pattern_2_tau_0.5}
+\centering
+\includegraphics[width=0.9\textwidth]{../results/preliminary_results/pcnm_simulation_2d_randomly_spaced.png}
+\caption{PCNM simulation results for irregular sampling in 2D space, showing the original sites and selected spatial eigenvectors.}
+\label{fig:pcnm_simulation_2d_randomly_spaced}
 \end{figure}
 
 \begin{figure}[!h]
-    \centering
-    \includegraphics[width=\textwidth]{../results/preliminary_results/pqrm_pattern_3_tau_0.5.png}
-    \caption{Quantile regression results of ZCI vs Stress Scores for cluster 3}
-    \label{fig:pqrm_pattern_3_tau_0.5}
+\centering
+\includegraphics[width=0.9\textwidth]{../results/preliminary_results/pcnm_simulation_detroit_river.png}
+\caption{PCNM simulation results for Detroit River site coordinates, showing the original sites and selected spatial eigenvectors.}
+\label{fig:pcnm_simulation_detroit_river}
+\end{figure}
+
+\clearpage
+\subsection{Power and sensitivity analysis on quantile regression with simulated data}
+
+This simulation evaluates two practical design questions for a piecewise (hinge) quantile regression intended for later ecological inference: (i) how precisely can the slope ($\beta_1$) and post-break change ($\delta$) be recovered across quantile levels $\tau$, and (ii) what sample size is required to attain acceptable power ($\geq 0.8$) to detect a true hinge effect at a high conditional quantile while controlling the Type I error when the hinge effect is absent.
+
+\textbf{Model and data generation.} We generated responses under a fixed breakpoint ($\kappa = 5$) hinge model
+\[ Y = \beta_0 + \beta_1 X + \delta (X-\kappa)_+ + \varepsilon, \]
+with parameters ($\beta_0=1.0$, $\beta_1=0.5$, $\delta=-0.6$) and heteroscedastic noise whose standard deviation increases linearly with $X$. A broad quantile grid $\tau \in \{0.05, 0.15, \ldots, 0.95\}$ allows inspection of effect heterogeneity across the conditional distribution.
+
+\textbf{Estimation and hinge effect uncertainty.} For an initial sample ($n=500$) we fit separate quantile regressions (fixed $\kappa$) and constructed bootstrap confidence intervals ($B=300$) for the hinge coefficient $\delta_\tau$ using shared resampling indices across all $\tau$ within each bootstrap replicate. Sharing indices stabilizes cross-$\tau$ comparisons of $\delta_\tau$ and reduces Monte Carlo variability in the $\delta_\tau$ profile.
+
+\textbf{Finite-population subsampling for precision.} To evaluate how precision scales with added observations we first generated a large synthetic ``population'' ($n=5000$) from the same model. Without replacement subsamples of sizes $n \in \{20, 50, 80, \ldots, 500\}$ were repeatedly drawn ($R=40$) and refit to obtain RMSE curves for the slope $\beta_{1\tau}$ and hinge $\delta_\tau$ relative to their generating values. This mimics augmenting an already characterized system rather than refitting to entirely new stochastic realizations, providing a conservative (finite-population) view of diminishing returns.
+
+\textbf{Power and Type I operating characteristics.} For each candidate $n$, $L=70$ fresh datasets were simulated under (a) the alternative ($\delta = -0.6$) and (b) the null ($\delta = 0$). For every $\tau$ we computed a Wald statistic $|\hat{\delta}_\tau|/\text{SE}(\hat{\delta}_\tau)$ and declared detection if it exceeded $1.96$ (two-sided $\alpha \approx 0.05$). Bootstrap resampling of detection indicators ($B=350$) supplied $95\%$ confidence intervals for the empirical detection probability (power) and false positive rate (Type I). All proportions and interval bounds were clipped to $[0,1]$ for coherence. The high quantile $\tau=0.95$ was designated the primary design target because upper conditional responses often reflect limiting processes of ecological interest; the smallest $n$ achieving mean power $\geq 0.8$ at $\tau=0.95$ is reported as the recommended minimum sample size.
+
+\textbf{Key results (Figure \textcolor{blue}{\ref{fig:power_sensitivity_analysis_simulation}} panels).}
+(a) Fitted quantile functions (colored) closely envelop simulated data and track the deterministic mean (black), with clear post-break downward adjustment at higher $X$. (b) The $\delta_\tau$ profile shows moderately consistent negative hinge effects across mid-to-upper quantiles; bootstrap intervals exclude $0$ for higher $\tau$, indicating stronger evidence of a breakpoint effect in the upper tail. (c) RMSE declines rapidly up to roughly $n \approx 200$--$250$, after which gains flatten, suggesting diminishing precision returns beyond this range for $\tau=0.95$. (d) Power increases with $n$ and crosses $0.8$ at the recommended $n$ (vertical dashed line), while the empirical Type I error under $\delta=0$ remains near the nominal $0.05$ across sample sizes, confirming adequate test calibration under the simulation settings.
+
+\textbf{Implications for study design.} These results provide a defensible sample size target and demonstrate that (i) synchronised bootstrap resampling enhances interpretability of cross-$\tau$ hinge effect patterns, (ii) finite-population style subsampling yields realistic diminishing returns guidance, and (iii) the proposed Wald-based detection maintains nominal error rates. Prior to applying the framework to empirical ZCI--stress analyses, sensitivity analyses around $\kappa$ mis-specification and noise structure can refine robustness expectations, but the current evidence supports proceeding with the indicated minimum $n$.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\textwidth]{../results/preliminary_results/power_sensitivity_evaluation_test.png}
+\caption{Power and Sensitivity Analysis on Quantile Regression with Simulated Data, showing the impact of sample size and noise level on the detection of significant quantile regression coefficients.}
+\label{fig:power_sensitivity_analysis_simulation}
 \end{figure}

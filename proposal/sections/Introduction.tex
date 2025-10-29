@@ -2,92 +2,139 @@
 
 % \textcolor{blue}{(Background about the study area)}
 
-The Great Lakes, which occupy 84\% 
-of North America's surface fresh water and 21\% of the world's supply of surface fresh water
-\cite{EPA_Greatlakes2024}, are one of the world's largest surface freshwater ecosystems. 
-Many nutrients and contaminants in the Great Lakes are stored in the sediments, playing
-a crucial role in supporting aquatic habitats and influencing water quality.
+\subsection{Sediment contamination in aquatic ecosystems}
+% great lakes are important
 
-Contaminants in the sediments are, however, unavoidable.
-Among the regions, heavily developed shorelines are found around Lake Erie
-and the connecting channels such as the Detroit River,
-where human activities have left pronounced environmental footprints~\cite{EPA_SOGL2007}. 
-These impacts have raised public concerns about the potential ecological risks, 
-and have prompted calls for stronger protective and restorative actions 
-to safeguard these aquatic ecosystems.
+Rivers and lakes provide essential services for human well-being and biodiversity \cite{Vörösmarty2010GlobalThreats}.
+% sediments store many nutrients and contaminants
+With intensive industrial and urban development along the shorelines, anthropogenic activities have released 
+significant amount of pollutants into the these aquatic ecosystems \cite{DavidAllan2013},
+elevating ecological risks as many of these contaminants bioaccumulate in aquatic organisms and eventually enter human 
+food chains through fish consumption, posing health risks \cite{Eggleton2004SedDisturbance, USGS_SedimentAssociatedContaminants_2019}.
+These ecological and human health risks underscore the urgent need for scientific assessment to inform management strategies \cite{Niemi2004EcologicalIndicators}.
 
-In light of these challenges, scientific assessment of aquatic condition becomes fundamental 
-to retaining the integrity of an ecosystem. 
-One effective approach is \textbf{to assess the nature and extent of sediment contamination}, 
-which directly reflects anthropogenic impacts and serves as a partial indicator of ecological integrity.
+Most of these anthropogenic inputs enter the water through 
+both point and non-point sources, carrying two major groups of components: 
+nutrients (which are water soluble) and hydrophobic contaminants \cite{Carpenter1998Nonpoint}.
+The nutrients (especially phosphorus) are taken up by algae, contributing to eutrophication.
+However, hydrophobic chemicals
+quickly attach to floating organic particles and settle into the muddy bottom sediments through natural binding processes \cite{DavidAllan2013}.
+There they accumulate at the bottom where water meets sediment.
+Similar binding and absorption processes turn bottom sediments into
+a combined storage area of past pollution \cite{Eggleton2004SedDisturbance, USGS_SedimentAssociatedContaminants_2019, ChiaiaHernandez2022,Burton2002SedQuality}.
+The chemicals bounded to sediment particles remain chemically stable for extended periods, effectively preserving pollutant signatures 
+and creating a persistent record of contamination events across multiple temporal scales \cite{ChiaiaHernandez2022, Burton2002SedQuality}.
+This integrative role establishes sediments as a biogeochemical archive that smooths short-term water column fluctuations,
+making sediment contaminant measurements a robust long-term {manifestation} of anthropogenic stress \cite{Karickhoff1984Sorption}.
 
-This rationale is grounded in a well-established body of research:
-sediment contamination is widely used as a proxy for assessing human-induced impacts in aquatic ecosystems.
-Numerous studies have demonstrated that chemical contaminants—especially trace metals and persistent organic pollutants—
-accumulate in sediments and can adversely affect benthic organisms and overall ecosystem health~\cite{ChiaiaHernandez2022}.
-These impacts disrupt ecosystem structure and function, causing shifts in species composition, food web dynamics, and
-nutrient cycling. Such synchronous ecological changes provide the foundation for regression-based analysis 
-between contamination levels and indicators of ecosystem condition. 
-Among these indicators, the taxonomic composition of benthic macroinvertebrates is frequently used 
-due to its sensitivity to sediment conditions and its practicality and cost-effectiveness 
-compared to other biological measures.
 
-Building on this relationship, one promising approach is to develop a model that links sediment contamination 
-levels to shifts in benthic macroinvertebrate taxonomic composition. A simplified method involves constructing a 
-composite index based on selected taxa and their relative abundances, which enhances communicability with stakeholders
-and simplifies interpretation. However, this index-based method inevitably sacrifices information compared to analyses
-using the full taxonomic dataset, and the selection of taxa and the index construction process may introduce
-subjectivity and limit generalizability\cite{Desrosiers2020}. 
-\textcolor{blue}{On top of it, how to scale the index and measure the distance between indices is a
-crucial work to reveal the meaning of changes and compare shifts in the index values, which originally 
-is determined by the raw benthic macroinvertebrate data.}
-It is also important to note that benthic macroinvertebrates respond not
-only to anthropogenic chemical contaminants, but also to natural environmental variability such as sediment texture, 
-organic content, and temperature. These complexities raise concerns about the reliability of such indices in attributing
-observed community shifts specifically to human-induced stress, thereby challenging the validity of stressor–index models that exclude natural variation.
+\subsection{Benthic communities as bioindicators for sediment contamination}
+Analysis of the chemical content of sediment is resource-intensive and overlooks bioavailability
+(the likelihood that chemicals are transferred to biota),
+necessitating complementary indicator approaches \cite{Chapman1990SedimentTriad}.
+In most natural ecosystems, individual organisms exhibit physiological and behavioral adjustments under external pressures; 
+aquatic benthic macroinvertebrates likewise express stressor-mediated responses that scale to detectable community change \cite{Holling1973}.
+Benthic macroinvertebrate assemblages can reflect concentrations of sediment-borne contaminants and habitat conditions \cite{Tampo2021Bioindicators},
+rendering them effective bioindicators of sediment contamination levels \cite{Desrosiers2020}.
+These responses can be observed through differences in benthic community composition and many attempts to develop indices on small aquatic systems, 
+such as small lakes, rivers, and streams, have been shown successful \cite{Cain1992Bioindicators, Archaimbault2010SedimentStreams},
+motivating extension to large lakes and great rivers where fewer attempts were made but are promising
+ by some successful implementations \cite{Birk2012Methods,Ciborowski2005ZoobenthicIndicators, Reynoldson1995}.
 
-To address this issue, it is necessary to consider environmental attributes in model development. 
-Environmental variables such as sediment characteristics, water chemistry, and hydromorphology play key roles
-in structuring benthic communities. 
-Therefore, the ability to distinguish natural variation from human-induced
-impacts becomes a critical question. 
-Including environmental covariates in regression models can analytically partition
-their influence from that of anthropogenic stressors through multivariate analysis.
-\textcolor{blue}{(Do we need env-variables in integrity assessment? if no, remove this mention!)}
-However, in the context of ecological
-integrity assessment or stress evaluation, this separation is often more complex due to the partial confounding
-of natural and human-induced factors. While the confounding effects of environmental variables exists in both
-modeling and assessment contexts, the methods required to account for them may differ substantially.
+Effective bioindicator development requires balancing ecological relevance with practical applicability.
+Ideal taxa should exhibit sensitivity to pollution gradients, maintain wide distribution across environmental gradients within the study area,
+and be readily sampled and taxonomically identified \cite{LenatResh2001Taxonomy}.
+In large aquatic ecosystems, environmental complexity and heterogeneity present additional challenges for bioindicator development,
+necessitating the inclusion of diverse taxa assemblages that influence both indicator construction and interpretation \cite{Menezes2010Trait, Bonada2006BiomonitoringReview}.
+Through strategic selection of an appropriate taxonomic pool, it becomes feasible to develop robust and sensitive bioindicators 
+for sediment contamination assessment \cite{LenatResh2001Taxonomy}.
 
-Additionally, the existence of unmeasured or unmeasurable factors—and their complex interactions 
-with observed model inputs—may lead to non-linear relationships between variables, 
-highlighting the importance of threshold detection. 
-This detection introduces a crucial modeling component: identifying points at which small 
-changes in environmental stressors lead to abrupt ecological responses. 
-In the context of this study, such thresholds may reflect tipping points in sediment contamination 
-levels, beyond which benthic community structures shift significantly. 
-Detecting these thresholds enables more targeted and efficient bioassessment strategies, 
-and may help guide the development of environmental quality criteria or inform restoration priorities.
 
-\medskip
+\subsection{Variation in community composition across environmental gradients}
 
-To apply these concepts effectively, \textbf{this program will narrow its focus to the Huron-Erie corridor}, 
-a critical aquatic link connecting Lake Huron and Lake Erie. This corridor forms a 
-hydrologically synchronous water system, characterized by faster flow 
-caused by \textit{channel constriction}—a well-known concept in fluid dynamics. 
-These physical characteristics contribute to unique environmental conditions in the corridor 
-and increase the complexity of sediment assessment, making traditional assessment approaches 
-less suitable for this setting.
+Zoobenthic communities vary with respect to both anthropogenic stressors (e.g., sediment contaminants) 
+and natural environmental variability (e.g., substrate, temperature, flow) \cite{PasanenMortensen2013FoxLynx}.
+Under consistent environmental conditions, community composition prior to anthropogenic influence 
+represents the naturally-shaped baseline for comparison following pollution onset \cite{Reynoldson1997ReferenceCondition}.
 
-\medskip
+In pervasively human-influenced regions, zoobenthic community composition is obscured by the combined influence of
+anthropogenic stressors and natural environmental variability \cite{Stoddard2006}.
+This necessitates identifying and isolating the pre-pollution community composition from observed levels,
+since only the anthropogenically-driven component is relevant for developing
+bioindicators of sediment contamination \cite{Reynoldson1997ReferenceCondition}.
 
-\textbf{Our goal is to develop a more economical and efficient method to assess sediment contamination levels} 
-specifically tailored to the Huron-Erie corridor, with the potential for broader application 
-to nearby aquatic ecosystems. The foundational idea is inspired by the work of Jian 
-(Zhang 2008)~\cite{Zhang2008}, who investigated the composition of zoobenthic 
-communities to infer contamination in this region.
+Therefore, partitioning community composition into naturally-driven and pollution-driven components 
+is essential for sediment contamination bioindicator development \cite{Reynoldson1997ReferenceCondition}.
+The natural component provides the taxonomic baseline and enables quantification of anthropogenic deviations,
+thereby isolating the pollution-driven signal across temporal scales
+for indicator construction \cite{Legendre2008VariationPartitioning}.
 
-\textbf{Building on Jian's general framework}, we aim to both enhance the original methodology and 
-incorporate recent advancements—enabled by improved computational resources and 
-emerging context-specific analytical techniques. Through this effort, we seek to create a 
-more adaptive, data-driven approach to infer aquatic condition from zoobenthic measurements in complex freshwater systems.
+Building upon this environmental context, these three components - 
+benthic communities, sediment contamination, and natural environmental gradients 
+- interact and reveal zoobenthic community responses to external changes.
+Figure \textcolor{blue}{\ref{fig:introduction_study_system}} provides a conceptual overview 
+of how zoobenthic communities exist within this context,
+illustrating the framework for understanding community responses to anthropogenic stressors.
+
+
+\subsection{Accounting for spatial structure and autocorrelation}
+Spatial location and local environmental attributes (i.e., ecological covariates) of sampling sites represents easily collected yet frequently overlooked information.
+Many studies assume that zoobenthic communities are shaped identically by natural attributes
+irrespective of their spatial positions \cite{Borcard1992SpatialPartialling},
+bringing simplicity in quantitative analysis but this may not hold in all real scenarios.
+
+Advances in spatial statistics and computational power now enable incorporation of ecosystem spatial structure 
+and linking environmental complexity to geo-heterogeneity \cite{Borcard2002PCNM,Harris2011GWPCA}.
+Accumulating studies demonstrate that natural heterogeneity is spatially structured
+across ecosystems and that modeling this structure substantially improves explanation for community variation \cite{Turner1989PatternProcess,Borcard1992SpatialPartialling,Borcard2002PCNM}.
+The primary rationale is that many unmeasured or unmeasurable natural environmental attributes have their own spatial signatures,
+enabling spatial variables to serve as proxies for these hidden drivers \footnote{
+This approach parallels the use of instrumental variables and proxy variables in econometrics, 
+where measurable variables are employed to control for unmeasured confounders and enable causal inference. 
+} \cite{Dormann2007SpatialAutocorrelation,Turner1989PatternProcess}.
+Therefore, incorporating essential spatial analysis is a promising method to
+control more natural variation in community composition,
+ultimately bringing a clearer picture of zoobenthic community responses
+to sediment contamination \cite{Legendre2008VariationPartitioning}.
+
+\subsection{Study system: St. Clair-Detroit River System}
+
+These mechanistic principles provide the theoretical foundation for developing a
+bioindicator of sediment contamination that controls for environmental and spatial variability.
+To implement this framework, this study will apply quantitative methods
+within the St. Clair-Detroit River System (SCDRS) of the Great Lakes.
+
+As one of the world's largest surface freshwater ecosystems, 
+the Great Lakes region contains 21\% of the global supply of surface fresh water 
+and supports the livelihoods of millions of people \cite{EPA_Greatlakes2024}.
+While much of the Great Lakes region remains minimally disturbed,
+certain areas have historically suffered from intensive anthropogenic activities \cite{EPA_SOGL2007}.
+These heavily impacted areas are primarily concentrated along western Lake Erie's shorelines and its connecting waterways,
+particularly the Detroit River\cite{EPA_SOGL2007, Drouillard2006, Ciborowski1988}, making these regions intensively monitored and studied.
+
+Leveraging available data compiled and integrated by Zhang \cite{Zhang2008} with other sources
+(Farara and Burt 1993 \cite{Farara1993}; Wood 2004 \cite{Wood2004}), this study
+will use dataset from the Huron-Erie corridor that comprises the St. Clair-Detroit River System (SCDRS).
+This corridor forms a connected water system
+characterized by areas of fast flow where the channel is constricted
+\footnote{
+Channel constriction occurs when water flow is forced through a narrower cross-sectional area,
+resulting in increased velocity and turbulence according to the continuity 
+equation in fluid dynamics.} and by extensive anthropogenic pollution from
+upstream sources and bordering shorelines.
+Among the three segments, the Detroit River will be the primary focus due to its intensive human influence
+and the availability of extensive benthic community and sediment contamination data (\cite{Zhang2008}).
+By developing this bioindicator framework on the surveyed area, this case study is expected 
+to advance bioindicator research applicable to other large lakes and rivers and to 
+provide a methodological foundation for broader application across the Great Lakes region.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../results/ideas_visualization/introduction_study_system.png}
+    \caption{\textit{Overview of how zoobenthic communities live under both sediment contamination and natural environmental conditions, 
+    and may respond to these external changes. 
+    (Base template adapted from Selvi \textit{et al.} (2019) \cite{Selvi2019}, originally created and shared on \textbf{BioRender}. 
+    Modified by Feng Gu using \textbf{Sora2} with text-based prompts.)}}
+    \label{fig:introduction_study_system}
+
+\end{figure}

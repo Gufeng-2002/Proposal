@@ -10,8 +10,8 @@ margin=1in}
 \usepackage{hyperref}
 \usepackage{graphicx} % Required for including images
 \usepackage{subcaption}  % Required for subfigures
+\usepackage{tcolorbox}  % For colored boxes
 % \geometry{margin=1in}
-\usepackage{tcolorbox}
 \usepackage{booktabs}    % \toprule, \midrule, \bottomrule
 \usepackage{caption}     % if you need \caption* or extra caption control
 \usepackage{longtable}   % if your table might span multiple pages
@@ -22,42 +22,100 @@ margin=1in}
 \usepackage{multirow}
 \usepackage{booktabs}
 
+% \title{Zoobenthic Community Indicators of Sediment Contamination}
 
-
-\title{Template for Thesis Proposal}
-\author{Feng Gu}
+% \author{Feng Gu}
 
 \begin{document}
-\maketitle
+% \maketitle
 
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+
+{\LARGE\bfseries Zoobenthic Community Indicators of Sediment Contamination\par}
+\vspace{1.2cm}
+
+{\Large\textbf{Research Proposal}\par}
+\vspace{1.5cm}
+
+{\large\textbf{Author:} Feng Gu\par}
+\vspace{0.5cm}
+
+{\large\textbf{Program and Institution:}\par}
+\vspace*{.2cm}
+{\large Master of Science (M.Sc.) in Data Science\\
+\vspace*{.2cm}
+Thompson Rivers University (TRU), Kamloops, British Columbia, Canada\par}
+\vspace{1.5cm}
+
+{\Large\textbf{Supervisory Committee:}\par}
+\vspace*{.2cm}
+{\large
+Dr. Jabed H. Tomal (Supervisor) — Department of Mathematics and Statistics, TRU\\
+\vspace*{.2cm}
+Dr. Yue Zhang (Co-supervisor) — Department of Mathematics and Statistics, TRU\\
+\vspace*{.2cm}
+Prof. Jan Ciborowski (Committee Member) — Department of Biological Sciences, University of Calgary
+\par}
+
+\vfill
+{\large October 2025\par}
+
+\end{titlepage}
+
+
+\clearpage
+
+\begin{center}
+    {\Large \textbf{Abstract}}
+\end{center}
+
+This proposal reviews the rationale and analytical framework of Zoobenthic Community Indicators (ZCI)
+of Sediment Contamination in aquatic ecosystems. 
+Building upon this foundation, the author outlines the research objectives and discusses
+the key methodologies to be applied.
+Preliminary results are produced based on the framework described in the \textit{Methodology} section,
+demonstrating the feasibility of the proposed approach 
+and supporting the achievability and significance of the research objectives.  
+
+This proposal comprises eight main sections. 
+The \textbf{Introduction} presents the research topic, describes the general relationships among its fundamental components and 
+introduces the study system. 
+The \textbf{Research Objectives} section defines the specific goals and principal questions to be addressed in the project. 
+The \textbf{Data Description} outlines the dataset characteristics, including data types, sources, collection methods, and variable definitions. 
+The \textbf{Literature Review} synthesizes relevant research on the close study objectives and their analytical approaches.
+The \textbf{Methodology} section presents the overall analytical framework and discusses specific techniques, with several figures provided 
+to illustrate the idealized workflow. 
+The \textbf{Preliminary Results} section reports initial outcomes from implementing key methodological steps, demonstrating both 
+the feasibility and scalability of the proposed framework. 
+The \textbf{Practical Implementation Plan} describes the computational strategies supporting the research objectives, including 
+the structure of the codebase and choice of programming languages. 
+The \textbf{Supervisory Dissolution} section summarizes supervision conditions and acknowledgements, 
+and the \textbf{Timeline} outlines a provisional schedule with major milestones for completion of each research phase.  
+
+
+\clearpage
 \tableofcontents
 
 \clearpage
-% \begin{center}
-%     {\Large Abstract}
-
-%     Here to put the abstract of the document.
-% \end{center}
-
-% \clearpage
 \input{sections/CusCommands.tex} % Custom commands for convenience
 \input{sections/Introduction.tex}
 \clearpage
 \input{sections/ResearchObjectives.tex}
-\clearpage
 \input{sections/DataDescription.tex}
-\clearpage
 \input{sections/LiteratureReview.tex}
-\clearpage
 \input{sections/Methodology.tex}
-\clearpage
 \input{sections/PreliminaryResults.tex}
-% \input{sections/subsectionofPreliminaryResults.tex}
-% % \clearpage
-% \input{sections/SupervisoryDissolution.tex}
-% % \clearpage
-% \input{sections/Timeline.tex}
+\input{sections/subsectionofPreliminaryResults.tex}
+\clearpage
+\input{sections/ImplementPlan.tex}
+\clearpage
+\input{sections/SupervisoryDissolution.tex}
+\clearpage
+\input{sections/Timeline.tex}
 
+\clearpage
 \bibliographystyle{plain}  % or use unsrt if you want citations in order of appearance
 \bibliography{sections/Reference}   % your .bib file, without .bib extension
 

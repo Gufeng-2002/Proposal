@@ -1,309 +1,159 @@
-\section{Literature Review(\textcolor{blue}{to majorly rewrite})}
+\section{Literature Review}
 
-% \subsection{Aquatic Integrity Assessment and Taxonomic Composition Response}
+\subsection{Sediment Contamination Assessment}
 
-\subsection{\textcolor{blue}{Sediment Contamination Evaluation Methods}}
-\textcolor{blue}{Majorly to talk about the common sediment contamination evaluation methods,
-and distinguish which methods are suitable across various environmental conditions.
-The generality of the assessment method can support a good stress level-environmental distribution in the data,
-which is crucial to make sure enough data points with fixed stress level across the environmental values.}
+Sediment contamination assessment serves as a fundamental tool for understanding
+and protecting aquatic ecosystem health, as contaminated sediments pose significant
+risks to benthic communities and serve as long-term sources of pollutants 
+that can affect entire food webs
+\cite{MacDonald2000SedimentGuidelines, Burton2010MultipleStressors}.
+Sediments act as major repositories for a wide range of contaminants 
+including heavy metals, persistent organic pollutants, and industrial
+chemicals, making their assessment critical for evaluating ecological 
+risks and informing environmental management decisions
+\cite{Chapman1990SedimentTriad, USGS_SedimentAssociatedContaminants_2019}.
 
-\subsection{\textcolor{blue}{Taxa composition clustering with minimal (fixed) stress level}}
-\textcolor{blue}{Majorly to talk how this clustering can help to identify the taxa composition patterns,
-which can be used as predicted values of the discriminant function analysis.}
+Some popular evaluation methods include contaminant index-based approaches such as the Enrichment Factor (EF) and the
+Geoaccumulation Index (Igeo).
+These index-based approaches provide pollution scores relative to known background or reference values, 
+often focusing on individual or selected chemical elements \cite{Birch2022Review} (Birch, 2022). 
+For example, the Igeo index \cite{BIRCH2013282} (Birch, 2013) compares current concentrations to pre-industrial levels,
+while the EF index compares current concentrations to regional background levels.
+However, these approaches are limited by their reliance on accurate background 
+concentration estimates and consideration of only a few chemical elements. 
+When applied to datasets with many variables, they become less effective 
+as they treat elements independently and fail to capture multivariate 
+contamination patterns \cite{Grunfeld2005Outliers}.
 
-\subsection{\textcolor{blue}{Discriminant Function Analysis of environmental variables for taxa composition clustering}}
+A more general class of evaluation methods relies on multivariate ordination and data reduction techniques. 
+These data-driven approaches consider all chemical variables simultaneously, revealing interaction patterns 
+through dimensionality reduction without requiring background or reference values, thus avoiding the 
+challenge of defining appropriate benchmarks \cite{Ciborowski2005ZoobenthicIndicators, Reynoldson1997ReferenceCondition}. 
+However, such methods often yield composite axes or scores that lack intuitive interpretation and clear 
+pollution thresholds, limiting their ability to provide comparable pollution categories like index-based 
+methods \cite{Reimann2008Chemometrics}. This interpretability challenge has been recognized in ecological 
+assessment contexts, where practitioners need actionable thresholds for management decisions 
+\cite{Reynoldson1999RCA}.
 
-\subsubsection{Aquatic Integrity by Sediment Contamination Evaluation}
-
-% \textcolor{blue}{What is aquatic integrity?}  
-
-Aquatic integrity refers to how well an ecosystem maintains its structure and function under both natural and human pressures.
- It encompasses the ability of aquatic systems to support and sustain a balanced, adaptive community of organisms having a species
-  composition, diversity, and functional organization comparable to natural habitats within a region.
-
-% \textcolor{blue}{What is sediment?}  
-
-In aquatic ecosystems, sediments act as long-term pollutant archives. They accumulate and retain contaminants over time—especially 
-heavy metals, pesticides, hydrocarbons, and other industrial or urban pollutants. Therefore, sediments exert a considerable influence 
-on the biological health of benthic organisms. However, it is often difficult to determine whether metal accumulation is due to
- natural processes or anthropogenic sources~\cite{Birch2007}.
-
-% \textcolor{blue}{What makes sediment useful for aquatic integrity assessment?}  
-
-Within such pollutant archives, anthropogenic contaminants accumulate through various pathways, including industrial 
-discharges and agricultural runoff. Many of these pollutants—such as cadmium, lead, and mercury—are toxic to benthic organisms
- even at low concentrations. High contaminant levels are frequently associated with reduced biodiversity and shifts in community composition. 
- These biological responses provide the foundation for using zoobenthic measurements to inversely infer sediment contamination levels and, 
- in turn, evaluate the ecological integrity of aquatic systems.
-
-However, anthropogenic pollution is not the only driver of changes in biological communities. Natural environmental 
-variability—including sediment texture, organic matter content, and hydrological conditions—also plays a significant 
-role in shaping benthic communities. As such, sediment contamination alone cannot fully explain or represent ecological 
-integrity. To account for the full picture, environmental conditions must also be considered.
-
-Nonetheless, in this program, we emphasize the controllable component of aquatic degradation—human-induced 
-pollution—as our primary focus. While environmental variability is acknowledged, it is not the central concern of this study.
-Our goal is to develop a model that assesses ecological condition by leveraging sediment contaminant data and linking it to 
-zoobenthic community structure, with the understanding that it may reflect only part of the full ecological integrity.
-
-% \textcolor{blue}{Mention some specific examples of sediment contaminant indices.}  
-
-Frequently used evaluation methods include contaminant index-based approaches such as the Enrichment Factor (EF) and the
-Geoaccumulation Index (Igeo). These indices provide pollution scores relative to known background or reference values, 
-often focusing on individual or selected chemical elements~\cite{Birch2022Review}. However, such methods typically ignore 
-interactions between pollutants and rely on accurate background concentrations—which may be difficult to obtain or define.
-Furthermore, these approaches are less effective when analyzing large-scale datasets with many chemical elements and spatially distributed sampling sites.
-
-% \textcolor{blue}{mention the PCA method}
-
-Another type of evaluation method is Principal Component Analysis(PCA) based methods.
-Such methods are multivariate and data driven, considering all chemical variables and revealing their 
-interaction pattern by dimensionality reduction. 
-Additionally, they do not need for background/reference values, which saves the resources for identifying 
-these benchmarks. By trade off, PCA methods may provide less intuitive scores(assessments) that lack
-direct interpretation, and the absence of benchmarks constrains the clear or comparable assessment results,
-no "moderately" or "severely" polluted sites can be identified as in the index methods.
-
-In conclusion, both groups of methods serve different but complementary purposes:
-indices for direct contamination assessment, and PCA for exploring patterns or creating composite 
-indicator.
-
-% \textcolor{blue}{mention the natural variabilities in shaping the integrity}
-
-However, the integrity of an aquatic site is determined not only by the anthropogenic impacts, but also by the natural pressures,
-ignoring natural pressures can make the assessment results biased, like over- or underestimating ecological degradation.
-The potential natural variabilities that shape the aquatic integrity include:
-geology, flow regime, temperature, elevation and so on.
-Consequently, a naturally metal-rich geology site might appear "degraded" but actually be natural,
-and a site with no pollution but naturally poor biological diversity
-\footnote{Biological diversity is not an environmental attribute, but a biological response variable.}
-might be wrongly flagged as "degraded" in
-the inference process.
-Therefore, quantifying anthropogenic pollution through sediment contamination data mainly 
-aims to assess the anthropogenic influence, and controlling for natural variation
-is necessary to assess the aquatic integrity through such quantification on pollution.
-
-
-\subsubsection{Aquatic Integrity by Biological Condition Gradient}
-% \textcolor{blue}{mention the represent of another assessment method: BCG}
-
-Another type of assessment method is Biological Condition Gradient (BCG),
-which is different from the contaminant evaluation in its conceptual basis, data sources and focus.
-
-BCG starts with a stress-response framework, categorizing sites into 6 biological condition levels,
-uses biological metrics(which the contaminant evaluation do not) to measure the biological responses 
-and other ecological responses to the stressors and finally makes an integrative measure of 
-ecosystem integrity.
-One of the key advantages of BCG is its widely applicable feature over a relatively large range
-\footnote{Large ranges: regional level(over several states or provinces), country level, continent level.}
-of aquatic ecosystems, which makes the biological condition to be interpreted independently of 
-assessment methods\cite{Davies2006}. However, it needs to build reference conditions from minimally disturbed sites,
-and deviation from these benchmarks(reference conditions) reflects biological degradation,
-which requires empirical data and expert judgment to assess the biological integrity.
-
-Considering my research objectives and the available data sources, 
-the contaminant evaluation are more suitable for my work, which reflects potential stress but not 
-whether ecosystems are responding biologically. Such conceptual properties make the inference 
-for degree of pollution through \textbf{biological responses} possible and avoid laking the 
-biological information to the input data of the inference model.
-
-\subsection{Ecological Thresholds Detection and Inference}
-
-\subsubsection{Ecological Thresholds Existence and Application Scope}
-
-% \textcolor{blue}{what is ecological threshold}
-
-Ecological thresholds are points at which a relatively small change in an 
-external condition(like pollution, or nutrient level) causes a rapid and 
-significant change in ecosystem structure or function.
-
-The concept of ecological thresholds emerged in the 1970's from the idea that 
-ecosystems often exhibit multiple 'stable' states, depending on environmental conditions\cite{Holling1973}(Holling 1973, as cited in Groffman et al. 2006).
-These stable states that are separated by thresholds can be long-lasting conditions 
-that an ecosystem can exist in - such as clear-water lake with abundant vegetation versus 
-a turbid, algae-dominated lake, with different ecological structures, functions and species compostion.
-
-The shifts between these states occur when thresholds are crossed. 
-Some shifted states may arise naturally and are not harmful to human societies
-or the surrounding environment, but others may be, leading to the loss of both 
-economic and ecological value.
-For those potential shifts toward undesirable states that may or will cause 
-such losses, detecting and inferring thresholds is economically and ecologically important, 
-as it helps guide management policies and prevent potential degradation. 
-Additionally, the identified thresholds can help set restoration targets,
-beyond which preservation efforts are more likely to support long-term ecological 
-goals—especially when the recovered state is near a threshold and at risk of degrading again.
-Therefore, interest in ecological threshold has grown in both ecological management and 
-restoration fields, with the aim of maintaining or restoring ecosystems in a desired state.
-
-% \textcolor{blue}{talk the commonly existing thresholds in aquatic ecosystems}
-
-Turning to the scope of ecological threshold analysis, there are three main ways that threshold concepts have been applied in ecology:
-(1) analysis of dramatic and surprising "shifts" in ecosystem state; 
-(2) the determination of "critical loads"
-(3) analysis of "extrinsic factor thresholds"
-\cite{peterson2006ecological}. Their explanations are summarized in Table \ref{tab:thresholds_application_scopes}.
-
-The three scopes have respective preferred applications but they are not mutually exclusive. In some studies,
-they are used together to provide a more comprehensive understanding of ecological thresholds, extending the
-threshold application to multiple aspects of research and management.
-
-\begin{table}[ht]
-\centering
-\caption{Three main ways threshold concepts are applied in ecology~(Peterson, etc. 2006 \cite{peterson2006ecological}).}
-\label{tab:thresholds_application_scopes}
-\renewcommand{\arraystretch}{1.8} % Increase row height for vertical centering
-\begin{tabular}{>{\centering\arraybackslash}p{4.5cm} >{\centering\arraybackslash}p{9.5cm}}
-\hline
-\textbf{Application Aspect} & \textbf{Meaning} \\
-\hline
-Shifts in ecosystem state & Analyzing dramatic and surprising changes in ecosystem condition caused by small changes in a driver. \\
-\hline
-Critical loads & Determining the pollutant level an ecosystem can absorb without experiencing a shift in state or function. \\
-\hline
-Extrinsic factor thresholds & Analyzing how large-scale variable changes affect relationships between drivers and responses at smaller scales. \\
-\hline
-\end{tabular}
-\end{table}
-
-My project aligns with two ecological threshold applications. 
-It fits the \textit{shifts in ecosystem state} scope by using zoobenthic 
-data to detect biological changes that signal ecosystem transitions. 
-It also supports the \textit{critical loads} approach by 
-linking stressor levels to community responses, estimating pollutant thresholds 
-beyond which ecological integrity declines, while controlling for environmental
-variation.
-
-\subsubsection{Ecological Thresholds Detection and Inference Methods}
-% \textcolor{blue}{Driven factors that cause ecological thresholds}
-
-Both natural variables (e.g., temperature, altitude) and anthropogenic stressors (e.g., pollutant concentration)
-can show threshold behavior, where crossing a  breakpoint in both these variables can lead 
-to rapid shifts in ecosystem structure or function. 
-
-% \textcolor{blue}{talk how bad the traditional regression methods are in detecting(not able, able but not bad) thresholds}
-
-On top of that, the existence of thresholds often suggests 
-the fact that the ecosystem is not linear in its response to external changes,
-not only in the rate and direction of change, but also in the heteroscedatic 
-nature and other properties. It challenges the classical regression methods 
-that constrain the strict linearity assumption and urges the implmentation of
-more flexible models that fit specific ecological contexts.
-
-Typically, changes in conditional means are the exclusively focus
-of many traditional regression methods, which may fail to distinguish
-significant changes beyond the mean scope in heterogeneous distributions.
-Some extended traditional methods, such as weighted least squares (WLS) is designed by assigning weights inversely 
-proportional to the variance at each level, to address \emph{heteroscedasticity} where the variance is not constant.
-However, heteroscedasticity is only one type of complexity in ecological data\cite{Cade2003}. Ecological relationships often involve \emph{multiple sources of variation}, such as:
-\begin{itemize}
-    \item \textbf{Unmeasured limiting factors:} Not all influential variables can be measured or included in the model, leading to variation in the response not explained by the predictors.
-    \item \textbf{Heterogeneous responses:} Changes may occur primarily in certain portions of the response distribution (e.g., only in the upper quantiles), while mean trends remain flat.
-    \item \textbf{Nonlinear and threshold effects:} Ecological thresholds may be apparent in certain quantiles or as abrupt changes not captured by mean regression models.
-\end{itemize}
-As a result, while methods like WLS can address heteroscedasticity, they may still fail to capture the 
-full range of ecological relationships—especially when important ecological processes affect 
-only a subset of the data or produce complex response patterns beyond simple mean-variance trends.
-
-Quantile regression (QR) can be a desirable and practical solution to these challenges, benefiting from its 
-less strict assumptions on parametrics and its ability to model the quantile-specific (\(\tau \in [0, 1]\)) relationship between 
-variables\cite{Huang2017}. It provides alternatives to reveal limiting factors by fitting different quantiles of the response distribution, 
-and does not require the heteroscedasticity assumption in relationships, making the exploration beyond the mean scope possible.
-Additionally, the detection of nonlinear and threshold effects can be achieved by fitting piecewise quantile regression models,
-capturing abrupt changes in the response distribution at specific quantiles.
-
-% \textcolor{blue}{talk how these days people use new methods to detect thresholds, better than the traditional ones}
-
-Horning (2013)\cite{Horning2012} explores the concept of ecological thresholds in the context of behavioral physiology,
-and introduces the use of \textit{constraint lines}—the boundaries delimiting point
-clouds in bivariate scatterplots—to reveal limiting factors and physiological constraints.
-In his study, quantile regression were employed to analyze these constraint lines, this method losses the assumptions on parametrics
-and therefore covers wider range of possible relationships between variables.
-
-Cade and Noon (2003)\cite{Cade2003} makes a gentle discussion on quantile regression and its application in ecology,
-highlighting the statistical properties and possible regulations in changes of estimated coefficients across 
-different quantiles that a QR model may have under different complicated scenarios.
-They discussed several representative examples of hidden effects in ecological data, which can not be captured by 
-mean-regression models. Additionally, a quantile regression model was fitted on a linearly increasing heteroscedasticity case, 
-and bootstrapping method was employed to estimate the confidence intervals of the coefficients, showing 
-a relatively stable and reliable performance of a QR model in such cases.
-They concluded that heteroscedasticity is the cause that leads to changes in the coefficients across quantiles,
-and that the QR model can be a good choice to address this issue.
-However, a "linearity" relationship between quantiles of the response and predictors should be the underlying factor 
-that supports the use of QR models, because even a case of homoscedasticity (constancy in variance, not in distribution shape) 
-can cause changes beyond the mean scope. 
-Such a homoscedastic case—though rare in the real world—that results in changes beyond the mean further reinforces 
-the need for quantile regression models in ecological data analysis.
-
-% \textcolor{blue}{talk the potential factors that may influence the detection and inference we may meet during the work,}
-
-Tests on accuracy and reliability of detected thresholds are necessary, several factors can affect these tests.
-Based on the work of Daily et al. (2012)\cite{Daily2012}, these factors influence the detection quality with different degrees
-in different contexts, including: 
-\begin{itemize}
-    \item Sample Size: Smaller sample sizes generally increase the rate of false threshold detection, where as 
-    larger sample sizes improve the reliability of threshold estimates.
-    \item Sample-Environment Distribution(SED): The frequency and distribution of samples across the 
-    environmental gradient (SED) can greatly influence both the detection and the estimated location 
-    of thresholds. Non-uniform or uneven SEDs can lead to biased or misleading results.
-    \item Rate of Change: The actual rate of linear or nonlinear change in ecological response can interact 
-    with statistical method properties, affecting detection outcomes.
-    \item User-selected Model Parameters: The choice of model parameters-such as the quantile level(\(\tau\)) in QR, or 
-    bandwidth in smoothing methods (e.g., sizer)-significantly impacts the detection rate and accuracy of threshold locations.
-\end{itemize}
-
-Correlatedly with the risks in false detection and/or inference, Spake et al. (2022)\cite{Spake2022} synthesizes evidence 
-on threshold detection and emphasizes that the concept of scale is fundamental to understanding, quantifying, and interpreting ecological thresholds.
-They organize the scale-dependence of threshold detection into four aspects, as shown in Table \ref{tab:scale_framework}.
-
-\begin{table}[h!]
-\centering
-\caption{The Scale Framework in Ecological Threshold Detection (adapted from Spake et al., 2022)
-(\textbf{Grain} refers to the smallest unit of measurement, affecting the resolution and 
-detail of the data. \textbf{Extent} refers to the overall scope (area or time) of the
-study, affecting the range of environmental or temporal gradients observed.)
-}
-\label{tab:scale_framework}
-\renewcommand{\arraystretch}{2.2}
-\begin{tabular}{|m{3.5cm}|m{11cm}|}
-\hline
-\centering\textbf{Scale Concept} & \centering\textbf{Description} \tabularnewline
-\hline
-\centering\textbf{Grain (Resolution)} & The size of the smallest unit of observation or measurement (e.g., plot size, pixel size, sampling interval); determines the level of detail captured. \tabularnewline
-\hline
-\centering\textbf{Extent} & The total area or duration covered by the study; determines the environmental or temporal gradient sampled and potential to observe thresholds. \tabularnewline
-\hline
-\centering\textbf{Organizational Level} & The biological or ecological hierarchy at which data are collected or analyzed (e.g., individual, population, community, ecosystem). \tabularnewline
-\hline
-\centering\textbf{Analytical Method} & The type of statistical or modeling approach used to detect thresholds, which can influence the sensitivity and interpretation of results. \tabularnewline
-\hline
-\end{tabular}
-\end{table}
-
-
-In my project, piecewise quantile regression model (PQRM) will be the major analytical method to detect the
-potential thresholds between the stressors and the taxonomic composition, 
-allowing for a nuanced understanding of their relationships. Such scale framework can inform my project together with the factors mentioned above by guiding decisions on sampling design,
-data aggregation (if needed), and model selection, increasing the robustness and ecological relevance of threshold detection.
+Turn to large river and lake ecosystems, various pollution sources contribute to a complex array of contaminants,
+escalating the need for approaches that can handle complex, multivariate contamination patterns.
+Considering there are 30 stressor variables in my project and many of them share 
+common pollution sources and interact via similar transport mechanisms,
+a data-driven and multivariate approach is more suitable to capture the contamination levels and patterns.
+Some ordination methods, such as Principal Component Analysis (PCA), can effectively reduce dimensionality and 
+eliminate redundancy among correlated variables \cite{Zitko1994PCA}.
+In addition to reducing dimensionality and eliminating redundancy,
+advanced PCA methods can also enhance interpretability by incorporating variable weights \cite{Delchambre2015} (Delchambre, 2015) or spatial information \cite{Harris2011GWPCA} (Harris et al., 2011).,
+making it possible to derive more meaningful contamination scores.
 
 
 
+\subsection{Control of confounding environmental gradients}
+In researching relationships between zoobenthic community composition and 
+sediment contamination levels, naive associations can be confounded by environmental conditions
+that are correlated with community composition or even contamination.
+This induces omitted-variable bias and can either inflate or mask the true signal we seek 
+for the zoobenthic condition index (ZCI). Accordingly, quantify the unique contribution of 
+sediment contamination to community composition, after conditioning on measured environment,
+is essential for deriving a reliable and interpretable ZCI.
 
-\subsection{Synthetic Data in Machine Learning for Ecological Assessment}
+To overcome this confounding issue, some common fixes include: \textit{(1) regression adjustment / partial regression; (2) variance partitioning; (3) blocking / stratification} \cite{Eberhardt1991FieldStudies, Wiens1995AccidentalImpacts}.
+Approaches (1) and (2) are most often used in ecological regression as adjustments to the naïve model, whereas (3) is more common in experimental designs.
+The third approach represents a design/estimator-based solution that mitigates latent confounding when environmental information is limited or unaddressed \cite{Byrnes2025CausalInference}.
 
-% \textcolor{blue}{In this section, i will review related references to talk 
-% \begin{itemize}
-%     \item What is synthetic data, and some statistical background to back up the idea of using it.
-%     \item Why synthetic data is useful in ecological assessment, specifically in our case.
-%     \item The common methods to generate synthetic data, including the statistical models and machine learning methods
-% \end{itemize}
-% }
+Within the regression framework, adjustments are useful for statistically disentangling environmental influences \cite{Legendre2008VariationPartitioning}.
+However, model performance can be sensitive to the sampling configuration and to the explanatory power of predictors \cite{Legendre2010Limitations,Fischer2018Uncertainty}.
 
-References already in hands include:
-\begin{itemize}
-    \item \textit{'Small Data' for big insights in ecology (citation to be added)}
-\end{itemize}
+Simulation studies show that model-revealed relationships depend not only on the true ecological relationships but also on the sampling--environmental distribution (SED), underscoring the importance of evenness and representativeness in sampling design \cite{Fischer2018Uncertainty}.
+These limitations produce high uncertainty in estimates when any of the following occur: missing environmental predictors, poor coverage across environmental gradients, or insufficient sample size \cite{Eberhardt1991FieldStudies}.
 
-There are more references to be added this month, after reviewing and confirming their relevance to the thesis objectives.
+Experimental designs can mitigate these issues when regression adjustment is not feasible, and analytical tools such as clustering or stratification can make the design more objective and data-driven \cite{Wiens1995AccidentalImpacts}.
+However, these designs are also subject to SED and sample-size constraints.
 
+A notable avenue is to infer \textit{counterfactual outcomes} for the response variable conditional on specified environmental gradients; these outcomes represent the environmentally deterministic component of the response \cite{Larsen2019CausalAnalysis, Byrnes2025CausalInference}.
+This approach combines regression adjustment with experimental design: initial data for learning the counterfactual surface are selected via design (e.g., blocking/stratification), and the subsequent inference step uses trained regression models to estimate these deterministic counterfactual outcomes.
+
+
+\subsection{Zoobenthic Community Composition Measurement}
+
+Zoobenthic community composition measurement depends fundamentally on 
+how we define and quantify the community, making it nearly impossible to establish a 
+perfect measurement framework in real ecological systems \cite{Tampo2021Bioindicators}. 
+Common descriptors of zoobenthic community composition include species richness, abundance, and biomass, 
+which can be used individually or in combination to characterize the community \cite{Sitati2021AbundanceBiomass}. 
+Each metric presents trade-offs between the amount of ecological information captured 
+and the cost of data acquisition \cite{Menezes2010Trait}. 
+
+The individual organism represents the minimal unit in a zoobenthic community and serves as 
+the foundational unit for measuring abundance and biomass. 
+While individual responses to external conditions ultimately comprise the community response,
+their high variability and inherent stochasticity present significant challenges 
+for using single or few individuals to adequately describe community-level responses.
+In contrast, taxonomically rich assemblages can better represent community responses by 
+averaging out individual-level variability and capturing broader ecological patterns \cite{Menezes2010Trait}.
+
+Beyond the fundamental function of representing community structure, the choice of measurement approach 
+depends critically on the study's primary objectives. In this project, the main purpose is to 
+assess sediment contamination levels using zoobenthic community indicators \cite{Ciborowski2005ZoobenthicIndicators}.
+Rooted in this purpose, we seek measurements that demonstrate sensitivity to contamination gradients—
+whether reflecting raw stressor concentrations or evaluated contamination levels—such that 
+pollution-sensitive metrics can outperform alternatives in mathematically predicting contamination levels.
+However, such forecast-oriented measurements may exhibit limited mechanistic interpretability 
+regarding the zoobenthic community composition itself, necessitating caution when 
+interpreting results from a biological perspective.
+To address this limitation, comprehensive mechanistic investigation of the taxa-based measurements 
+and cross-validation with existing ecological knowledge becomes essential \cite{Reynoldson1999RCA}.
+
+
+\subsection{Quantitative Regression Beyond the Mean and Threshold Detection}
+Benefiting from the Central Limit Theorem and classical statistical theory,
+mean-based regression has dominated ecological analysis \cite{Cade2003}.
+Traditional linear regression performs adequately under weak correlations 
+and homogeneous variance, but degrades substantially when these assumptions 
+are violated—a common occurrence in ecology due to natural system complexity 
+and unmeasurable latent factors. 
+% While weighted least squares (WLS) addresses 
+% heteroscedasticity through variance weighting, its linearity assumptions 
+% still limit ecological applications.
+
+Beyond statistical limitations, mean-based approaches can miss important ecological
+patterns, elevating the meaningful investigation of relationships beyond the mean.
+Ecological drivers often act in a heterogeneous way across the distribution of
+responses, such that effects emerge only under extreme conditions and not in the 
+center of the distribution. 
+For instance, \cite{Schmidt2012Quantile}(Schmidt et al. 2012)
+found that the influence of metal concentration was much stronger 
+at higher quantiles of the biological response than on the mean.
+Such upper‐tail–specific associations underscore the limitation of 
+mean regression approaches when the primary ecological signal lies in extremes.
+They thus motivate the use of “mean‐beyond” methods
+- such as quantile regression - that can capture 
+effects under high-stress or extreme conditions.
+
+Nonlinear and threshold effects are another phenomenon observed in many ecological 
+systems \cite{Cade2003} (Cade \& Noon, 2003). 
+The concept of ecological thresholds emerged in the 1970s with the recognition 
+that ecosystems often exhibit multiple 'stable' states under different conditions 
+\cite{Holling1973} (Holling, 1973, as cited in Groffman et al., 2006).  
+Peterson et al. \cite{peterson2006ecological} (Peterson et al., 2006) summarized 
+three main applications of ecological thresholds: (1) \textbf{ecosystem state shifts} from small driver changes, 
+(2) \textbf{critical loads} that ecosystems can absorb without functional changes, and 
+(3) \textbf{extrinsic factor thresholds} where large-scale changes modify driver–response relationships.
+These ecological recognitions motivate and justify the use of threshold-detecting 
+methods in ecological regression modeling.
+
+The threshold usually functions as a crucial decision point for management,
+policy, or conservation actions.
+Therefore, identifying and validating ecological thresholds is vital in both 
+statistical and practical senses. 
+Spake et al. \cite{Spake2022} emphasized the importance of \textit{scale}, 
+highlighting four dimensions affecting threshold detection: (1) \textbf{grain} (measurement resolution), 
+(2) \textbf{extent} (total area or duration covered), (3) \textbf{organizational level} (biological hierarchy), 
+and (4) \textbf{analytical method} (statistical approach employed).
+Turning to threshold detection, testing their existence and reliability is crucial.  
+Daily et al. \cite{Daily2012} (Daily et al., 2012) showed that small sample sizes increase false detections, 
+while larger samples improve reliability.  
+The sample–environment distribution (SED) strongly influences detection and threshold location, 
+with uneven SEDs producing bias.  
+The rate of ecological change, whether linear or nonlinear, interacts with the chosen method, 
+and user-defined parameters (e.g., quantile \(\tau\), bandwidth) play a critical role.

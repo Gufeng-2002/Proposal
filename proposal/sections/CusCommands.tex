@@ -1,10 +1,21 @@
+% Temporarily commented out due to missing tcolorbox package
+% \newcommand{\noticingbox}[2]{
+%     \begin{tcolorbox}[colback=yellow!10!white,
+%                                         colframe=orange!90!black,
+%                                         title = #2,
+%                                         fonttitle=\bfseries]
+%         #1
+%     \end{tcolorbox}
+% }
+
+% Alternative simple implementation without tcolorbox
 \newcommand{\noticingbox}[2]{
-    \begin{tcolorbox}[colback=yellow!10!white,
-                                        colframe=orange!90!black,
-                                        title = #2,
-                                        fonttitle=\bfseries]
-        #1
-    \end{tcolorbox}
+    \begin{center}
+        \fbox{\begin{minipage}{0.8\textwidth}
+            \textbf{#2}\\
+            #1
+        \end{minipage}}
+    \end{center}
 }
 
 \newcommand{\refcolor}[1]{\textcolor{blue}{\ref{#1}}

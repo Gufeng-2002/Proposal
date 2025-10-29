@@ -1,49 +1,49 @@
-This is BibTeX, Version 0.99d (TeX Live 2024)
+This is BibTeX, Version 0.99d (TeX Live 2025)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Feng's_Proposal.aux
 The style file: plain.bst
 Database file #1: sections/Reference.bib
 Warning--entry type for "EPA_Greatlakes2024" isn't style-file defined
---line 51 of file sections/Reference.bib
-You've used 15 entries,
+--line 478 of file sections/Reference.bib
+You've used 70 entries,
             2118 wiz_defined-function locations,
-            609 strings with 7531 characters,
-and the built_in function-call counts, 5198 in all, are:
-= -- 501
-> -- 300
-< -- 0
-+ -- 122
-- -- 104
-* -- 411
-:= -- 921
-add.period$ -- 47
-call.type$ -- 15
-change.case$ -- 97
+            980 strings with 21280 characters,
+and the built_in function-call counts, 26231 in all, are:
+= -- 2540
+> -- 1572
+< -- 1
++ -- 629
+- -- 551
+* -- 2182
+:= -- 4548
+add.period$ -- 211
+call.type$ -- 70
+change.case$ -- 487
 chr.to.int$ -- 0
-cite$ -- 15
-duplicate$ -- 155
-empty$ -- 358
-format.name$ -- 104
-if$ -- 1025
+cite$ -- 70
+duplicate$ -- 757
+empty$ -- 1768
+format.name$ -- 551
+if$ -- 5171
 int.to.chr$ -- 0
-int.to.str$ -- 15
-missing$ -- 12
-newline$ -- 80
-num.names$ -- 30
-pop$ -- 72
+int.to.str$ -- 70
+missing$ -- 64
+newline$ -- 353
+num.names$ -- 142
+pop$ -- 376
 preamble$ -- 1
-purify$ -- 81
+purify$ -- 413
 quote$ -- 0
-skip$ -- 106
+skip$ -- 510
 stack$ -- 0
-substring$ -- 316
-swap$ -- 13
-text.length$ -- 0
+substring$ -- 1749
+swap$ -- 74
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 60
+type$ -- 278
 warning$ -- 0
-while$ -- 49
-width$ -- 17
-write$ -- 171
+while$ -- 249
+width$ -- 72
+write$ -- 771
 (There was 1 warning)
