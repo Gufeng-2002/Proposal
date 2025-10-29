@@ -1,12 +1,13 @@
-# Zoobenthic Community Indicators of Sediment Contamination in a Large River: Applications of Data Science
+# Proposal for "Zoobenthic Community Indicators of Sediment Contamination"
 
-## 📖 Project Overview
+## 📖 Repository Overview
 
 This repository contains the thesis proposal for developing zoobenthic community indicators to assess sediment contamination in large river systems, with specific application to the Lake Huron-Lake Erie Corridor. The research employs advanced data science methods including Principal Component Analysis (PCA), quantile regression, and spatial analysis to create threshold-capable bioindicators.
 
 **Author:** Feng Gu  
 **Institution:** Thompson Rivers University  
-**Program:** Master of Science in Data Science  
+**Program:** Master of Science in Data Science
+**Email:** gfeng643@gmail.com
 
 ## 🏗️ Repository Structure
 
