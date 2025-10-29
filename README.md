@@ -1,4 +1,4 @@
-# Proposal for "Zoobenthic Community Indicators of Sediment Contamination"
+# Proposal - "Zoobenthic Community Indicators of Sediment Contamination"
 
 ## 📖 Repository Overview
 
