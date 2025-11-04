@@ -1,6 +1,7 @@
 # Proposal - "Zoobenthic Community Indicators of Sediment Contamination"
 
 ## 📖 Repository Overview
+To access the complete proposal, please check - "a complete research proposal can be found [here](https://drive.google.com/file/d/1o4wm0Ox7t6uW84AtK3pRNr8zHJ5kNsW7/view?usp=drive_link)" .
 
 This repository contains the thesis proposal for developing zoobenthic community indicators to assess sediment contamination in large river systems, with specific application to the Lake Huron-Lake Erie Corridor. The research employs advanced data science methods including Principal Component Analysis (PCA), quantile regression, and spatial analysis to create threshold-capable bioindicators.
 
